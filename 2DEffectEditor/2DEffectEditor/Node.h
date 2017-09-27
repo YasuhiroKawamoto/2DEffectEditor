@@ -2,13 +2,15 @@
 // @file	Node.h
 // @brief	eqŠÖŒW‚Ì\’z
 // @date	2017/09/27
-// @author	GF2 21 ‹{è‹M‘P
+// @author	GS2 21 ‹{è‹M‘P
 //------------------------------------------------------------------------
 #pragma once
+
 #ifndef NODE
 #define NODE
 
-class Vector2;
+#include "Vector2.h"
+
 class Image;
 
 class Node
