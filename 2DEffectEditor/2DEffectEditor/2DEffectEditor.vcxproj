@@ -135,38 +135,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainForm.cpp" />
-    <ClCompile Include="ParameterForm1.cpp" />
-    <ClCompile Include="ParameterForm2.cpp" />
-    <ClCompile Include="ConfigForm.cpp" />
-    <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="ParameterForm1.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
-    <ClInclude Include="ParameterForm2.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
-    <ClInclude Include="ConfigForm.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
-    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ParameterForm1.resx">
-      <DependentUpon>ParameterForm1.h</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ParameterForm2.resx">
-      <DependentUpon>ParameterForm2.h</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ConfigForm.resx">
-      <DependentUpon>ConfigForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
