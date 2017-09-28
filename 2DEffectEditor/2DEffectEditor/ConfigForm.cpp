@@ -1,2 +1,2 @@
-#include "ConfigForm1.h"
+#include "ConfigForm.h"
 
