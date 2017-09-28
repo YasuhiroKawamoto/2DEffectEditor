@@ -168,9 +168,11 @@ namespace My2DEffectEditor {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(445, 285);
+			this->ClientSize = System::Drawing::Size(458, 344);
 			this->ControlBox = false;
 			this->Controls->Add(this->groupBox1);
+			this->Cursor = System::Windows::Forms::Cursors::Default;
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;
 			this->Name = L"ParameterForm1";

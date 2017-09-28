@@ -10,12 +10,12 @@ namespace My2DEffectEditor {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// ParameterForm3 の概要
+	/// ConfigForm の概要
 	/// </summary>
-	public ref class ParameterForm3 : public System::Windows::Forms::Form
+	public ref class ConfigForm : public System::Windows::Forms::Form
 	{
 	public:
-		ParameterForm3(void)
+		ConfigForm(void)
 		{
 			InitializeComponent();
 			//
@@ -27,7 +27,7 @@ namespace My2DEffectEditor {
 		/// <summary>
 		/// 使用中のリソースをすべてクリーンアップします。
 		/// </summary>
-		~ParameterForm3()
+		~ConfigForm()
 		{
 			if (components)
 			{
@@ -201,20 +201,21 @@ namespace My2DEffectEditor {
 			this->label2->TabIndex = 1;
 			this->label2->Text = L"幅";
 			// 
-			// ParameterForm3
+			// ConfigForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(377, 339);
+			this->ClientSize = System::Drawing::Size(378, 376);
 			this->ControlBox = false;
 			this->Controls->Add(this->groupBox2);
 			this->Controls->Add(this->groupBox1);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;
-			this->Name = L"ParameterForm3";
+			this->Name = L"ConfigForm";
 			this->ShowInTaskbar = false;
 			this->Text = L"ConfigForm";
-			this->Load += gcnew System::EventHandler(this, &ParameterForm3::ParameterForm3_Load);
+			this->Load += gcnew System::EventHandler(this, &ConfigForm::ConfigForm_Load);
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
 			this->groupBox2->ResumeLayout(false);
@@ -225,7 +226,7 @@ namespace My2DEffectEditor {
 
 		}
 #pragma endregion
-	private: System::Void ParameterForm3_Load(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void ConfigForm_Load(System::Object^  sender, System::EventArgs^  e) {
 	}
 };
 }
