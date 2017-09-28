@@ -1,5 +1,10 @@
 #pragma once
 
+#include "ParameterForm1.h"
+#include "ParameterForm2.h"
+#include "ConfigForm.h"
+#include "PlayerForm.h"
+
 namespace My2DEffectEditor {
 
 	using namespace System;
@@ -63,6 +68,22 @@ namespace My2DEffectEditor {
 		}
 #pragma endregion
 	private: System::Void MainForm_Load(System::Object^  sender, System::EventArgs^  e) {
+		this->IsMdiContainer = true;
+
+
+		ParameterForm1^ paramaterForm1 = gcnew ParameterForm1;
+		paramaterForm1->MdiParent = this;
+		paramaterForm1->Show();
+
+
+		ParameterForm2^ paramaterForm2 = gcnew ParameterForm2;
+		paramaterForm2->MdiParent = this;
+		paramaterForm2->Show();
+
+		PlayerForm::PlayerForm^ PlayerForm = gcnew PlayerForm::PlayerForm;
+		paramaterForm1->MdiParent = this;
+		paramaterForm1->Show();
+
 	}
 	};
 }
