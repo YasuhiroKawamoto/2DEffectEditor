@@ -206,10 +206,15 @@ namespace My2DEffectEditor {
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(377, 339);
+			this->ControlBox = false;
 			this->Controls->Add(this->groupBox2);
 			this->Controls->Add(this->groupBox1);
-			this->Name = L"ConfigForm";
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
+			this->Name = L"ParameterForm3";
+			this->ShowInTaskbar = false;
 			this->Text = L"ConfigForm";
+			this->Load += gcnew System::EventHandler(this, &ParameterForm3::ParameterForm3_Load);
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
 			this->groupBox2->ResumeLayout(false);
@@ -220,5 +225,7 @@ namespace My2DEffectEditor {
 
 		}
 #pragma endregion
+	private: System::Void ParameterForm3_Load(System::Object^  sender, System::EventArgs^  e) {
+	}
 };
 }

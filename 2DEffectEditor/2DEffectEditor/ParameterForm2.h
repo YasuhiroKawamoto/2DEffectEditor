@@ -73,7 +73,7 @@ namespace My2DEffectEditor {
 
 
 
-			 
+
 
 	private:
 		/// <summary>
@@ -294,10 +294,14 @@ namespace My2DEffectEditor {
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(545, 437);
+			this->ControlBox = false;
 			this->Controls->Add(this->groupBox3);
 			this->Controls->Add(this->groupBox2);
 			this->Controls->Add(this->groupBox1);
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
 			this->Name = L"ParameterForm2";
+			this->ShowInTaskbar = false;
 			this->Text = L"ParameterForm2";
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
@@ -311,5 +315,5 @@ namespace My2DEffectEditor {
 		}
 #pragma endregion
 
-};
+	};
 }
