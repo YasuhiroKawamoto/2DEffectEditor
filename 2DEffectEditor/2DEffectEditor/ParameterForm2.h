@@ -73,7 +73,7 @@ namespace My2DEffectEditor {
 
 
 
-			 
+
 
 	private:
 		/// <summary>
@@ -311,5 +311,5 @@ namespace My2DEffectEditor {
 		}
 #pragma endregion
 
-};
+	};
 }

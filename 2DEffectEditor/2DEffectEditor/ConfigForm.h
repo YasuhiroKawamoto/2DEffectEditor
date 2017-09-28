@@ -220,5 +220,5 @@ namespace My2DEffectEditor {
 
 		}
 #pragma endregion
-};
+	};
 }

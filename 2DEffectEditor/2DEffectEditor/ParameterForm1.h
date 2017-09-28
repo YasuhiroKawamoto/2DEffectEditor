@@ -190,6 +190,6 @@ namespace My2DEffectEditor {
 
 		comboBox1->SelectedIndex = 0;
 	}
-};
+	};
 
 }
