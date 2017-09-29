@@ -1,11 +1,5 @@
 #pragma once
 
-#include "ParameterForm1.h"
-#include "ParameterForm2.h"
-#include "ConfigForm.h"
-#include "PlayerForm.h"
-#include "EffectForm.h"
-
 namespace My2DEffectEditor {
 
 	using namespace System;
@@ -16,12 +10,12 @@ namespace My2DEffectEditor {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// MainForm の概要
+	/// EffectForm の概要
 	/// </summary>
-	public ref class MainForm : public System::Windows::Forms::Form
+	public ref class EffectForm : public System::Windows::Forms::Form
 	{
 	public:
-		MainForm(void)
+		EffectForm(void)
 		{
 			InitializeComponent();
 			//
@@ -33,7 +27,7 @@ namespace My2DEffectEditor {
 		/// <summary>
 		/// 使用中のリソースをすべてクリーンアップします。
 		/// </summary>
-		~MainForm()
+		~EffectForm()
 		{
 			if (components)
 			{
@@ -56,40 +50,25 @@ namespace My2DEffectEditor {
 		{
 			this->SuspendLayout();
 			// 
-			// MainForm
+			// EffectForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(278, 244);
-			this->Name = L"MainForm";
-			this->Text = L"MainForm";
-			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
+			this->ControlBox = false;
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
+			this->Name = L"EffectForm";
+			this->Text = L"EffectForm";
+			this->Load += gcnew System::EventHandler(this, &EffectForm::EffectForm_Load);
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
-	private: System::Void MainForm_Load(System::Object^  sender, System::EventArgs^  e) {
-		this->IsMdiContainer = true;
-		this->WindowState = FormWindowState::Maximized;
-
-
-		ParameterForm1^ paramaterForm1 = gcnew ParameterForm1;
-		paramaterForm1->MdiParent = this;
-		paramaterForm1->Show();
-
-
-		ParameterForm2^ paramaterForm2 = gcnew ParameterForm2;
-		paramaterForm2->MdiParent = this;
-		paramaterForm2->Show();
-
-		PlayerForm^ playerForm = gcnew PlayerForm;
-		playerForm->MdiParent = this;
-		playerForm->Show();
-
-		EffectForm^ effectForm = gcnew EffectForm;
-		effectForm->MdiParent = this;
-		effectForm->Show();
-
+	private: System::Void EffectForm_Load(System::Object^  sender, System::EventArgs^  e) {
+		this->BackColor = Color::Black;
+		this->Size = System::Drawing::Size(256, 256);
 	}
 	};
 }

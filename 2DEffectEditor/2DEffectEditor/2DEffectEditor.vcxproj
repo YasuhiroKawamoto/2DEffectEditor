@@ -135,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConfigForm.cpp" />
+    <ClCompile Include="EffectForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="ParameterForm1.cpp" />
     <ClCompile Include="ParameterForm2.cpp" />
@@ -142,6 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConfigForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="EffectForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MainForm.h">
@@ -161,6 +165,9 @@
   <ItemGroup>
     <EmbeddedResource Include="ConfigForm.resx">
       <DependentUpon>ConfigForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EffectForm.resx">
+      <DependentUpon>EffectForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
