@@ -11,9 +11,14 @@
 
 #include <vector>
 #include <Memory>
+#include <vcclr.h>  
 #include "Vector2.h"
 
-class Image;
+using namespace System;
+using namespace System::Drawing;
+using namespace System::Windows::Forms;
+
+
 class Transform;
 
 // Nodeクラス
@@ -35,7 +40,7 @@ public:
 	// 親
 	Node* GetParent() { return m_Parent; }
 	// 画像	
-	Image* GetImage() { return m_Image; }
+	gcroot<Image^> GetImage() { return m_Image; }
 
 	// 画像	
 	const std::string& GetTag() { return m_Tag; }
@@ -48,16 +53,23 @@ public:
 	// 親
 	void SetParent(Node* parent) { m_Parent = parent; }
 	// 画像
-	void SetImage(Image* image) { m_Image = image; }
+	void SetImage(gcroot<Image^> image) { m_Image = image; }
 
 	// 画像
 	void SetTag(const std::string& Tag) { m_Tag = Tag; }
 
+	//更新
+	void Update(float frame);
+
+	void Draw(Graphics^ gr);
+
+
+
 private:
 	std::vector<Transform*> m_Transform; // トランスフォーム
 	//std::vector<std::unique_ptr<Transform>> m_Transform;
-	Node*   m_Parent;					// 親
-	Image*  m_Image;					// 画像
+	Node* m_Parent;				// 親
+	gcroot<Image^> m_Image;				// 画像
 
 	std::string m_Tag;
 };
@@ -89,11 +101,26 @@ public:
 	void SetScale(const Vector2& scale) { m_Scale = scale; }
 	// 回転
 	void SetRotate(const float& rotate) { m_Rotate = rotate; }
+
+	// 移動量の設定
+	void SetMoveAmount(float amount) { m_MoveAmount = amount; }
+	// 移動方向の設定
+	void SetMoveAngle(float angle) { m_MoveAngle = angle; }
+
+	// 座標の更新
+	void Update(float frame);
+
 	
 private:
 	Vector2 m_Position;		// 座標
 	Vector2 m_Scale;		// 拡大率
 	float	m_Rotate;		// 回転
+
+	float m_MoveAngle;				// 移動方向
+	float m_MoveAmount;				// 移動量
+
+
+
 };
 
 #endif	// NODE

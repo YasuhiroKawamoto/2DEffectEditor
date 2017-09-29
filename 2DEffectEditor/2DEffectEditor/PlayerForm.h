@@ -1,7 +1,6 @@
 #pragma once
 
 
-
 namespace My2DEffectEditor {
 
 	using namespace System;
@@ -171,7 +170,7 @@ namespace My2DEffectEditor {
 		}
 	}
 	private: System::Void timer1_Tick_1(System::Object^  sender, System::EventArgs^  e) {
-		this->Text = frame.ToString("000") + L"/30";
+		this->Text = frame.ToString("000") + L"/30 ƒtƒŒ[ƒ€";
 		this->ControlBox = false;
 
 		if (timerEnable)

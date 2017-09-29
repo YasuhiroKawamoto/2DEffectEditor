@@ -137,9 +137,13 @@
     <ClCompile Include="ConfigForm.cpp" />
     <ClCompile Include="EffectForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="Node.cpp" />
+    <ClCompile Include="NodeForm.cpp" />
+    <ClCompile Include="NodeManager.cpp" />
     <ClCompile Include="ParameterForm1.cpp" />
     <ClCompile Include="ParameterForm2.cpp" />
     <ClCompile Include="PlayerForm.cpp" />
+    <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConfigForm.h">
@@ -151,6 +155,11 @@
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="NodeForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="NodeManager.h" />
     <ClInclude Include="ParameterForm1.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -161,6 +170,7 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ConfigForm.resx">
@@ -171,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NodeForm.resx">
+      <DependentUpon>NodeForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ParameterForm1.resx">
       <DependentUpon>ParameterForm1.h</DependentUpon>

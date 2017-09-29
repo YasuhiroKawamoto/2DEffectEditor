@@ -3,10 +3,12 @@
 class Vector2
 {
 private:
+
+public:
+
 	float x;
 	float y;
 
-public:
 	// コンストラクタ
 	Vector2();
 	// デストラクタ
