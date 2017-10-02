@@ -47,10 +47,12 @@ void Node::Update(float frame)
 
 void Node::Draw(Graphics^ gr)
 {
+	gr->Clear(Color::Black);
+
 	for (auto& trans : m_Transform)
 	{
-
 		gr->DrawImage(m_Image, trans->GetPosition().x, trans->GetPosition().y);
+
 	}
 }
 
@@ -72,8 +74,13 @@ void Transform::Update(float frame)
 {
 	Vector2 vec;
 
-	vec.x = cosf(m_MoveAngle) * m_MoveAmount * frame;
-	vec.y = sinf(m_MoveAngle) * m_MoveAmount * frame;
+	vec.x = cosf(m_MoveAngle*(3.141593f / 180)) * m_MoveAmount * (frame-1);
+	vec.y = sinf(m_MoveAngle*(3.141593f / 180)) * m_MoveAmount * (frame-1);
 
-	SetPosition(vec);
+	Vector2 nodeVec;
+	nodeVec.x = 85;
+	nodeVec.y = 85;
+
+
+	SetPosition(vec + nodeVec);
 }
