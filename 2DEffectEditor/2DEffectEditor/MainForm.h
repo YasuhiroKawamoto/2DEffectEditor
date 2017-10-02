@@ -5,6 +5,7 @@
 #include "ConfigForm.h"
 #include "EffectForm.h"
 #include "PlayerForm.h"
+#include "NodeForm.h"
 
 namespace My2DEffectEditor {
 
@@ -49,6 +50,8 @@ namespace My2DEffectEditor {
 		ParameterForm2^ paramaterForm2 = gcnew ParameterForm2;
 		PlayerForm^ playerForm = gcnew PlayerForm;
 		EffectForm^ effectForm = gcnew EffectForm;
+		NodeForm^ nodeForm = gcnew NodeForm;
+
 
 	private: System::Windows::Forms::Timer^  timer1;
 	private: System::ComponentModel::IContainer^  components;
@@ -73,7 +76,7 @@ namespace My2DEffectEditor {
 			// timer1
 			// 
 			this->timer1->Enabled = true;
-			this->timer1->Interval = 1;
+			this->timer1->Interval = 16;
 			this->timer1->Tick += gcnew System::EventHandler(this, &MainForm::timer1_Tick);
 			// 
 			// MainForm
@@ -107,6 +110,11 @@ namespace My2DEffectEditor {
 
 		effectForm->MdiParent = this;
 		effectForm->Show();
+
+		nodeForm->MdiParent = this;
+		nodeForm->Show();
+
+
 
 	}
 	public: int GetFrame()
