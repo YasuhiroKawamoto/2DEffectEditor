@@ -188,8 +188,8 @@ namespace My2DEffectEditor {
 		{
 			i++;
 			// 親ノード追加
-			TreeNode^ node = gcnew TreeNode("File" + i);
-			node->Tag = "File" + i;
+			TreeNode^ node = gcnew TreeNode("Node" + i);
+			node->Tag = "Node" + i;
 			this->treeView1->Nodes->Add(node);
 			string tag;
 			MarshalString(node->Tag->ToString(), tag);
@@ -199,8 +199,8 @@ namespace My2DEffectEditor {
 		{
 			i++;
 			// 親ノード挿入
-			TreeNode^ node = gcnew TreeNode("File" + i);
-			node->Tag = "File" + i;
+			TreeNode^ node = gcnew TreeNode("Node" + i);
+			node->Tag = "Node" + i;
 			this->treeView1->Nodes->Insert(
 				this->treeView1->SelectedNode->Index,
 				node);
@@ -216,8 +216,8 @@ namespace My2DEffectEditor {
 		if (this->treeView1->SelectedNode != nullptr)
 		{
 			i++;
-			TreeNode^ node = gcnew TreeNode("File" + i);
-			node->Tag = "File" + i;
+			TreeNode^ node = gcnew TreeNode("Node" + i);
+			node->Tag = "Node" + i;
 			this->treeView1->SelectedNode->Nodes->Add(
 				node);
 			this->treeView1->Select();
@@ -229,17 +229,19 @@ namespace My2DEffectEditor {
 	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
 		// 選択ノード削除
 		if (this->treeView1->SelectedNode != nullptr)
-		{
-			this->treeView1->SelectedNode->Remove();
-			this->treeView1->Select();
-			// 選択
+		{			
+			// 選択			
 			string tag;
 			MarshalString(this->treeView1->SelectedNode->Tag->ToString(), tag);
-			pNode = pNodeManager->SearchNode(tag);
 			if (pNode != nullptr)
 			{
-				pNode = nullptr;
+				// データを削除
+				pNode = pNodeManager->DeleteNode(tag);
+
+				//pNode = nullptr;
 			}
+			this->treeView1->SelectedNode->Remove();
+			this->treeView1->Select();
 		}
 	}
 	private: System::Void textBox1_TextChanged_1(System::Object^  sender, System::EventArgs^  e) {

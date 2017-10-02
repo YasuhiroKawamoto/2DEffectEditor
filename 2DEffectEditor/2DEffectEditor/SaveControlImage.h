@@ -132,7 +132,7 @@ namespace My2DEffectEditor {
 			return img3;
 		}
 
-	private:  ArrayList^ bmpArray = gcnew ArrayList();	// BMPの配列
+	private: ArrayList^ bmpArray = gcnew ArrayList();	// BMPの配列
 	private: int FrameCnt = 60;	// フレーム数（画像の数）
 	private: int cnt = 0;		// カウンタ
 
