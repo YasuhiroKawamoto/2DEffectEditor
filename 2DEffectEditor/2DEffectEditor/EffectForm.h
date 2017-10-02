@@ -28,8 +28,8 @@ namespace My2DEffectEditor {
 			//
 
 			pNode = new Node;
-			m_oldFrame = m_frame = 0;
-			
+			m_frame = 0;
+
 		}
 
 	protected:
@@ -47,10 +47,12 @@ namespace My2DEffectEditor {
 	private:
 		Node* pNode;
 		int m_frame;
-		int m_oldFrame;
 
 		BufferedGraphicsContext^ currentContext;
 		BufferedGraphics^ myBuffer;
+
+	private: Bitmap^ saveImage;
+	private: Graphics^ saveGrah;
 
 	private: System::Windows::Forms::Timer^  timer1;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
@@ -82,7 +84,7 @@ namespace My2DEffectEditor {
 			// timer1
 			// 
 			this->timer1->Enabled = true;
-			this->timer1->Interval = 1;
+			this->timer1->Interval = 16;
 			this->timer1->Tick += gcnew System::EventHandler(this, &EffectForm::timer1_Tick);
 			// 
 			// pictureBox1
@@ -126,72 +128,73 @@ namespace My2DEffectEditor {
 #pragma endregion
 	private: System::Void EffectForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		this->BackColor = Color::Black;
-		this->Size = System::Drawing::Size(256, 256);
 
+
+		// ダブルバッファの設定
 		currentContext = BufferedGraphicsManager::Current;
 
 		myBuffer = currentContext->Allocate(this->pictureBox1->CreateGraphics(),
 			this->pictureBox1->DisplayRectangle);
 
 
-		this->SetStyle(ControlStyles::ResizeRedraw, true);
-		this->SetStyle(ControlStyles::DoubleBuffer, true);
-		this->SetStyle(ControlStyles::UserPaint, true);
-		this->SetStyle(ControlStyles::AllPaintingInWmPaint, true);
-
-	
-		std::vector<Transform*> m_trans;
-
-		m_trans.resize(15);
-
-		for (std::vector<Transform*>::size_type i = 0; i < m_trans.size(); i++)
+		// 各要素の挙動設定
 		{
-			Transform* t = new Transform();
+			std::vector<Transform*> m_trans;
+			m_trans.resize(15);
 
-			m_trans[i] = t;
+			for (std::vector<Transform*>::size_type i = 0; i < m_trans.size(); i++)
+			{
+				m_trans[i] = new Transform();
 
-			// 各トランスフォームに拡散する角度を設定
-			m_trans[i]->SetMoveAngle((360 / 15) * i);
+				// 各トランスフォームに拡散する角度を設定
+				m_trans[i]->SetMoveAngle((360 / 15) * i);
 
-			m_trans[i]->SetMoveAmount(3.0f);
+				// 各トランスフォームに拡散する速度を設定
+				m_trans[i]->SetMoveAmount(3.0f);
+			}
+			pNode->SetTransform(m_trans);
 		}
-		pNode->SetTransform(m_trans);
 
 		pNode->SetImage(Image::FromFile("kr43.png"));
 
+		saveImage = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
+		saveGrah = Graphics::FromImage(saveImage);
+
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
-		Graphics^ gr = pictureBox1->CreateGraphics();
-		gr = myBuffer->Graphics;
-		// gr->Clear(Color::Black);
+		// 仮描画用のバッファ
+		Graphics^ gr = myBuffer->Graphics;
+
+		// 仮バッファに描画
+		pNode->Draw(gr);
+
+		// 描画内容をスクリーンに反映
+		myBuffer->Render();
+
+		saveGrah->Clear(Color::Black);
+		pNode->Draw(saveGrah);
 
 
-		//if (m_oldFrame != m_frame)
-		{
-			pNode->Draw(gr);
-			myBuffer->Render();
-			pNode->Update(m_frame);
-		}
-		m_oldFrame = m_frame;
+		// ノードデータ更新
+		pNode->Update(m_frame);
 
 
 	}
 
-			 public: void SetFrame(int frame)
-			 {
-				 m_frame = frame;
-			 }
-
-			protected: void OnPaintBackground(PaintEventArgs pevent)
-			{
-				 // 何もしない
-				 // base.OnPaintBackground(pevent);
-			}
-private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
-}
-private: System::Void pictureBox1_Click(System::Object^  sender, System::EventArgs^  e) {
-}
-};
+	public: void SetFrame(int frame)
+	{
+		m_frame = frame;
+	}
 
 
+	public: Bitmap^ GetMap()
+	{
+		return saveImage;
+	}
+
+	private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
+	}
+	private: System::Void pictureBox1_Click(System::Object^  sender, System::EventArgs^  e) {
+	}
+	};
 }

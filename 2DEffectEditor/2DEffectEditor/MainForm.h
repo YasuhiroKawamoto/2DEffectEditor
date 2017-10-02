@@ -7,6 +7,9 @@
 #include "PlayerForm.h"
 #include "NodeForm.h"
 #include "ImageForm.h"
+#include "SavaControlImage.h"
+
+#include "testForm.h"
 
 namespace My2DEffectEditor {
 
@@ -16,6 +19,14 @@ namespace My2DEffectEditor {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+
+	struct Parameter1
+	{
+		int num;	// 発生数
+		int sFrame;	// 発生開始フレーム
+		int eFrame; // 発生終了フレーム
+		int pattern;// 発生パターン
+	};
 
 	/// <summary>
 	/// MainForm の概要
@@ -31,6 +42,7 @@ namespace My2DEffectEditor {
 			//
 
 		}
+
 
 	protected:
 		/// <summary>
@@ -48,11 +60,14 @@ namespace My2DEffectEditor {
 		int m_frame;
 
 		ParameterForm1^ paramaterForm1 = gcnew ParameterForm1;
+
 		ParameterForm2^ paramaterForm2 = gcnew ParameterForm2;
 		PlayerForm^ playerForm = gcnew PlayerForm;
 		EffectForm^ effectForm = gcnew EffectForm;
 		NodeForm^ nodeForm = gcnew NodeForm;
 		ImageForm^ imageForm = gcnew ImageForm;
+		TestForm^ testForm = gcnew TestForm;
+		SaveControlImage^ sci = gcnew SaveControlImage;
 
 
 	private: System::Windows::Forms::Timer^  timer1;
@@ -119,6 +134,12 @@ namespace My2DEffectEditor {
 		imageForm->MdiParent = this;
 		imageForm->Show();
 
+		testForm->MdiParent = this;
+		testForm->Show();
+
+		sci->MdiParent = this;
+		sci->Show();
+
 	}
 	public: int GetFrame()
 	{
@@ -128,10 +149,31 @@ namespace My2DEffectEditor {
 	public: void SetFrame(int frame)
 	{
 		m_frame = frame;
+
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
 		m_frame = playerForm->GetFrame();
 		effectForm->SetFrame(m_frame);
+
+		if (testForm->GetSaveFlag())
+		{
+			static int frameCounter = 0;
+			
+			if (frameCounter == 0) playerForm -> SetFrame(1);
+
+			SavePictboxImage(effectForm->GetMap(), "Resources\\" + (frameCounter + 1) + ".png");
+			frameCounter++;
+			if (frameCounter >= playerForm->GetTrackBarMax())
+			{
+				testForm->SetSaveFlag(false);
+				frameCounter = 0;
+			}
+		}
+
+	}
+	private: void SavePictboxImage(Bitmap^ bmp, String^ file)
+	{
+		bmp->Save(file, System::Drawing::Imaging::ImageFormat::Png);
 	}
 	};
 }

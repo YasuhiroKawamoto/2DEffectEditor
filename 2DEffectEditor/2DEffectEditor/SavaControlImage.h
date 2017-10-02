@@ -11,7 +11,7 @@ namespace My2DEffectEditor {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
-	const int ROW_NUM = 6;
+	const int ROW_NUM = 5;
 
 	/// <summary>
 	/// SaveControlImage の概要
@@ -43,7 +43,7 @@ namespace My2DEffectEditor {
 
 	protected:
 
-	private: System::Windows::Forms::Button^  button2;	
+	private: System::Windows::Forms::Button^  button2;
 
 	private: System::ComponentModel::IContainer^  components;
 	protected:
@@ -61,11 +61,11 @@ namespace My2DEffectEditor {
 
 			Bitmap^ bmp = gcnew Bitmap(w, h);
 			String^ str = gcnew String(file.c_str());
-			bmp->Save(str, System::Drawing::Imaging::ImageFormat::Png);			
+			bmp->Save(str, System::Drawing::Imaging::ImageFormat::Png);
 		}
 
 		// 文字列の型を変換 ( System::String -> std::string )
-		void MarshalString(String ^ s, std::string& os) 
+		void MarshalString(String ^ s, std::string& os)
 		{
 			using namespace Runtime::InteropServices;
 			const char* chars =
@@ -81,7 +81,7 @@ namespace My2DEffectEditor {
 			int height;		// 縦幅
 			Bitmap^ img3;	// 連結したもの
 			Graphics^ g;	// グラフィック
-			// データが一つの時
+							// データが一つの時
 			if (img1 == nullptr)
 			{
 				width = img2->Width;
@@ -96,22 +96,22 @@ namespace My2DEffectEditor {
 			height = img1->Height > img2->Height ? img1->Height : img2->Height;
 			img3 = gcnew Bitmap(width, height);
 			g = Graphics::FromImage(img3);
-			
+
 			g->DrawImage(img1, 0, 0);
 			g->DrawImage(img2, img1->Width, 0);
-			
-			
+
+
 			return img3;
 		}
 
 		// 画像を縦に連結
 		Bitmap^ ChainVertical(Bitmap^ img1, Bitmap^ img2)
-		{			
+		{
 			int width;		// 横幅
 			int height;		// 縦幅
 			Bitmap^ img3;	// 連結したもの
 			Graphics^ g;	// グラフィック
-			// データが一つの時	
+							// データが一つの時	
 			if (img1 == nullptr)
 			{
 				width = img2->Width;
@@ -133,62 +133,62 @@ namespace My2DEffectEditor {
 		}
 
 	private: ArrayList^ bmpArray = gcnew ArrayList();	// BMPの配列
-	private: int FrameCnt = 60;	// フレーム数（画像の数）
+	private: int FrameCnt = 30;	// フレーム数（画像の数）
 	private: int cnt = 0;		// カウンタ
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// デザイナー サポートに必要なメソッドです。このメソッドの内容を
-		/// コード エディターで変更しないでください。
-		/// </summary>
-		void InitializeComponent(void)
-		{
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->SuspendLayout();
-			// 
-			// button2
-			// 
-			this->button2->Location = System::Drawing::Point(353, 165);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(75, 36);
-			this->button2->TabIndex = 2;
-			this->button2->Text = L"出力";
-			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &SaveControlImage::button2_Click);
-			// 
-			// SaveControlImage
-			// 
-			this->ClientSize = System::Drawing::Size(451, 412);
-			this->Controls->Add(this->button2);
-			this->Name = L"SaveControlImage";
-			this->Load += gcnew System::EventHandler(this, &SaveControlImage::SaveControlImage_Load);
-			this->ResumeLayout(false);
+								/// <summary>
+								/// デザイナー サポートに必要なメソッドです。このメソッドの内容を
+								/// コード エディターで変更しないでください。
+								/// </summary>
+			 void InitializeComponent(void)
+			 {
+				 this->button2 = (gcnew System::Windows::Forms::Button());
+				 this->SuspendLayout();
+				 // 
+				 // button2
+				 // 
+				 this->button2->Location = System::Drawing::Point(353, 165);
+				 this->button2->Name = L"button2";
+				 this->button2->Size = System::Drawing::Size(75, 36);
+				 this->button2->TabIndex = 2;
+				 this->button2->Text = L"出力";
+				 this->button2->UseVisualStyleBackColor = true;
+				 this->button2->Click += gcnew System::EventHandler(this, &SaveControlImage::button2_Click);
+				 // 
+				 // SaveControlImage
+				 // 
+				 this->ClientSize = System::Drawing::Size(451, 412);
+				 this->Controls->Add(this->button2);
+				 this->Name = L"SaveControlImage";
+				 this->Load += gcnew System::EventHandler(this, &SaveControlImage::SaveControlImage_Load);
+				 this->ResumeLayout(false);
 
-		}
+			 }
 #pragma endregion
-		
+
 	private: System::Void SaveControlImage_Load(System::Object^  sender, System::EventArgs^  e) {
 
 	}
 	private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs^  e) {
-		 // キャプチャー
-		 //a++;
-		 //std::string num;
-		 //MarshalString(a.ToString(), num);
-		 //SaveImage(monthCalendar1, "Resources\\" + num + ".png"); // カレンダー
+		// キャプチャー
+		//a++;
+		//std::string num;
+		//MarshalString(a.ToString(), num);
+		//SaveImage(monthCalendar1, "Resources\\" + num + ".png"); // カレンダー
 	}
-			 
+
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		// 画像を結合する処理
 		System::Drawing::Bitmap^ bmp;	// 完成形となるもの
-		// 横に連結する	
+										// 横に連結する	
 		for (int i = 0; i < FrameCnt; i++)
 		{
 			// 1つ先の画像を読み込む
 			System::Drawing::Bitmap^ bmpW = gcnew System::Drawing::Bitmap("Resources\\" + (i + 1) + ".png");
 
 			cnt++;
-			if (i != 0) bmp = ChainHorizontal(bmp, bmpW);
+			bmp = ChainHorizontal(bmp, bmpW);
 			// 6の倍数になったらListに追加
 			if (cnt % ROW_NUM == 0)
 			{
@@ -216,11 +216,12 @@ namespace My2DEffectEditor {
 			bmp = ChainVertical(bmp, bmpH);
 		}
 		// 1つにまとめる
-		if(bmp)	bmp->Save("Resources\\Effects\\Effect.png", System::Drawing::Imaging::ImageFormat::Png);
+		if (bmp)	bmp->Save("Resources\\Effects\\Effect.png", System::Drawing::Imaging::ImageFormat::Png);
 
 		// 初期化
 		bmp = nullptr;
 		cnt = 0;
+		bmpArray->Clear();
 
 		// 一列ごとに出力してつなげる
 		// 画像を結合
@@ -256,6 +257,6 @@ namespace My2DEffectEditor {
 		//// 1つにまとめる
 		//bmp->Save("Resources\\Effects\\Effect.png", System::Drawing::Imaging::ImageFormat::Png);
 	}
-	
-};
+
+	};
 }

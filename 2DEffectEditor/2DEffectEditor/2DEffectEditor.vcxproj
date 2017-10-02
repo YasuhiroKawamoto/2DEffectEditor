@@ -144,6 +144,8 @@
     <ClCompile Include="ParameterForm1.cpp" />
     <ClCompile Include="ParameterForm2.cpp" />
     <ClCompile Include="PlayerForm.cpp" />
+    <ClCompile Include="SavaControlImage.cpp" />
+    <ClCompile Include="testForm.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +176,12 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SavaControlImage.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="testForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +209,12 @@
     <EmbeddedResource Include="PlayerForm.resx">
       <DependentUpon>PlayerForm.h</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SavaControlImage.resx">
+      <DependentUpon>SavaControlImage.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="testForm.resx">
+      <DependentUpon>testForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

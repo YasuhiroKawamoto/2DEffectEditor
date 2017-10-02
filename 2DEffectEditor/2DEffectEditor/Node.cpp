@@ -52,7 +52,6 @@ void Node::Draw(Graphics^ gr)
 	for (auto& trans : m_Transform)
 	{
 		gr->DrawImage(m_Image, trans->GetPosition().x, trans->GetPosition().y);
-
 	}
 }
 

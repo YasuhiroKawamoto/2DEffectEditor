@@ -92,9 +92,9 @@ namespace My2DEffectEditor {
 			// treeView1
 			// 
 			this->treeView1->Cursor = System::Windows::Forms::Cursors::Default;
-			this->treeView1->Location = System::Drawing::Point(12, 59);
+			this->treeView1->Location = System::Drawing::Point(48, 59);
 			this->treeView1->Name = L"treeView1";
-			this->treeView1->Size = System::Drawing::Size(273, 377);
+			this->treeView1->Size = System::Drawing::Size(279, 377);
 			this->treeView1->TabIndex = 0;
 			this->treeView1->AfterSelect += gcnew System::Windows::Forms::TreeViewEventHandler(this, &NodeForm::treeView1_AfterSelect);
 			// 
@@ -110,7 +110,7 @@ namespace My2DEffectEditor {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(93, -2);
+			this->button2->Location = System::Drawing::Point(128, -2);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(111, 34);
 			this->button2->TabIndex = 2;
@@ -120,7 +120,7 @@ namespace My2DEffectEditor {
 			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(210, -2);
+			this->button3->Location = System::Drawing::Point(291, -2);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(75, 36);
 			this->button3->TabIndex = 3;
@@ -132,11 +132,15 @@ namespace My2DEffectEditor {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(297, 448);
+			this->ClientSize = System::Drawing::Size(378, 454);
+			this->ControlBox = false;
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->treeView1);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
 			this->Name = L"NodeForm";
 			this->ShowInTaskbar = false;
 			this->Text = L"NodeForm";

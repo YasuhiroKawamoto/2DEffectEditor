@@ -185,7 +185,7 @@ namespace My2DEffectEditor {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(389, 361);
+			this->ClientSize = System::Drawing::Size(378, 354);
 			this->ControlBox = false;
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->groupBox1);

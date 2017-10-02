@@ -160,6 +160,16 @@ namespace My2DEffectEditor {
 		return frame;
 	}
 
+	public: void SetFrame(int frame)
+	{
+		this->frame = frame;
+	}
+
+
+	public: int GetTrackBarMax()
+	{
+		return trackBar1->Maximum;
+	}
 	public: void FrameControl()
 	{
 		frame++;
@@ -188,5 +198,5 @@ namespace My2DEffectEditor {
 	}
 	private: System::Void trackBar1_Scroll(System::Object^  sender, System::EventArgs^  e) {
 	}
-};
+	};
 }
