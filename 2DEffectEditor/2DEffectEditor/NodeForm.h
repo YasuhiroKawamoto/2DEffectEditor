@@ -56,7 +56,7 @@ namespace My2DEffectEditor {
 			 //private: std::unique_ptr<NodeManager> NodeM;
 	private: NodeManager* pNodeManager = new NodeManager();
 	private: Node* pNode;
-	private: System::Windows::Forms::TextBox^  textBox1;
+
 
 
 
@@ -87,21 +87,20 @@ namespace My2DEffectEditor {
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->SuspendLayout();
 			// 
 			// treeView1
 			// 
 			this->treeView1->Cursor = System::Windows::Forms::Cursors::Default;
-			this->treeView1->Location = System::Drawing::Point(36, 108);
+			this->treeView1->Location = System::Drawing::Point(12, 59);
 			this->treeView1->Name = L"treeView1";
-			this->treeView1->Size = System::Drawing::Size(121, 219);
+			this->treeView1->Size = System::Drawing::Size(273, 377);
 			this->treeView1->TabIndex = 0;
 			this->treeView1->AfterSelect += gcnew System::Windows::Forms::TreeViewEventHandler(this, &NodeForm::treeView1_AfterSelect);
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(1, -2);
+			this->button1->Location = System::Drawing::Point(12, -2);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(75, 34);
 			this->button1->TabIndex = 1;
@@ -111,9 +110,9 @@ namespace My2DEffectEditor {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(82, -2);
+			this->button2->Location = System::Drawing::Point(93, -2);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(100, 34);
+			this->button2->Size = System::Drawing::Size(111, 34);
 			this->button2->TabIndex = 2;
 			this->button2->Text = L"子を追加";
 			this->button2->UseVisualStyleBackColor = true;
@@ -121,7 +120,7 @@ namespace My2DEffectEditor {
 			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(188, -2);
+			this->button3->Location = System::Drawing::Point(210, -2);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(75, 36);
 			this->button3->TabIndex = 3;
@@ -129,21 +128,11 @@ namespace My2DEffectEditor {
 			this->button3->UseVisualStyleBackColor = true;
 			this->button3->Click += gcnew System::EventHandler(this, &NodeForm::button3_Click);
 			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(173, 108);
-			this->textBox1->Multiline = true;
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(100, 198);
-			this->textBox1->TabIndex = 4;
-			this->textBox1->TextChanged += gcnew System::EventHandler(this, &NodeForm::textBox1_TextChanged_1);
-			// 
 			// NodeForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(297, 448);
-			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
@@ -152,7 +141,6 @@ namespace My2DEffectEditor {
 			this->ShowInTaskbar = false;
 			this->Text = L"NodeForm";
 			this->ResumeLayout(false);
-			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -163,17 +151,17 @@ namespace My2DEffectEditor {
 			string tag;
 			MarshalString(e->Node->Tag->ToString(), tag);
 			pNode = pNodeManager->SearchNode(tag);
-			if (pNode != nullptr)
-			{
-				for (std::vector<Transform*>::size_type i = 0;
-					i<pNode->GetTransform().size();
-					i++)
-				{
-					textBox1->Text = pNode->GetTransform()[i]->GetRotate().ToString();
-				}
-				/*System::String^ s1 = gcnew System::String(pNode->GetTag().c_str());
-				textBox1->Text = s1;*/
-			}
+			//if (pNode != nullptr)
+			//{
+			//	for (std::vector<Transform*>::size_type i = 0;
+			//		i<pNode->GetTransform().size();
+			//		i++)
+			//	{
+			//		textBox1->Text = pNode->GetTransform()[i]->GetRotate().ToString();
+			//	}
+			//	/*System::String^ s1 = gcnew System::String(pNode->GetTag().c_str());
+			//	textBox1->Text = s1;*/
+			//}
 
 
 		}
@@ -230,8 +218,6 @@ namespace My2DEffectEditor {
 		// 選択ノード削除
 		if (this->treeView1->SelectedNode != nullptr)
 		{
-			this->treeView1->SelectedNode->Remove();
-			this->treeView1->Select();
 			// 選択
 			string tag;
 			MarshalString(this->treeView1->SelectedNode->Tag->ToString(), tag);
@@ -240,6 +226,8 @@ namespace My2DEffectEditor {
 			{
 				pNode = nullptr;
 			}
+			this->treeView1->SelectedNode->Remove();
+			this->treeView1->Select();
 		}
 	}
 	private: System::Void textBox1_TextChanged_1(System::Object^  sender, System::EventArgs^  e) {

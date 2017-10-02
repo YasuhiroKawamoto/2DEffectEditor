@@ -136,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="ConfigForm.cpp" />
     <ClCompile Include="EffectForm.cpp" />
+    <ClCompile Include="ImageForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="NodeForm.cpp" />
@@ -150,6 +151,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="EffectForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ImageForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MainForm.h">
@@ -178,6 +182,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EffectForm.resx">
       <DependentUpon>EffectForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImageForm.resx">
+      <DependentUpon>ImageForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>

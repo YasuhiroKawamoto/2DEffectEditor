@@ -6,6 +6,7 @@
 #include "EffectForm.h"
 #include "PlayerForm.h"
 #include "NodeForm.h"
+#include "ImageForm.h"
 
 namespace My2DEffectEditor {
 
@@ -51,6 +52,7 @@ namespace My2DEffectEditor {
 		PlayerForm^ playerForm = gcnew PlayerForm;
 		EffectForm^ effectForm = gcnew EffectForm;
 		NodeForm^ nodeForm = gcnew NodeForm;
+		ImageForm^ imageForm = gcnew ImageForm;
 
 
 	private: System::Windows::Forms::Timer^  timer1;
@@ -114,7 +116,8 @@ namespace My2DEffectEditor {
 		nodeForm->MdiParent = this;
 		nodeForm->Show();
 
-
+		imageForm->MdiParent = this;
+		imageForm->Show();
 
 	}
 	public: int GetFrame()

@@ -23,17 +23,17 @@ namespace My2DEffectEditor {
 			//
 		}
 
-	/// <summary>
-	/// 不透明度を取得
-	/// </summary>
+		/// <summary>
+		/// 不透明度を取得
+		/// </summary>
 	public: int GetStartOpacity()
 	{
 		return System::Convert::ToInt32(numericUpDown1->Value);
 	}
 
-	/// <summary>
-	/// 不透明度を取得
-	/// </summary>
+			/// <summary>
+			/// 不透明度を取得
+			/// </summary>
 	public: int GetEndOpacity()
 	{
 		return System::Convert::ToInt32(numericUpDown2->Value);
@@ -60,6 +60,7 @@ namespace My2DEffectEditor {
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown2;
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
 
 	private:
 		/// <summary>
@@ -75,16 +76,17 @@ namespace My2DEffectEditor {
 		void InitializeComponent(void)
 		{
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->numericUpDown2 = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->numericUpDown2 = (gcnew System::Windows::Forms::NumericUpDown());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->groupBox1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// groupBox1
@@ -103,6 +105,35 @@ namespace My2DEffectEditor {
 			this->groupBox1->TabIndex = 1;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"画像の不透明度";
+			// 
+			// numericUpDown2
+			// 
+			this->numericUpDown2->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(128)));
+			this->numericUpDown2->ImeMode = System::Windows::Forms::ImeMode::Disable;
+			this->numericUpDown2->Location = System::Drawing::Point(156, 99);
+			this->numericUpDown2->Name = L"numericUpDown2";
+			this->numericUpDown2->Size = System::Drawing::Size(97, 25);
+			this->numericUpDown2->TabIndex = 1;
+			this->numericUpDown2->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(259, 101);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(26, 18);
+			this->label2->TabIndex = 2;
+			this->label2->Text = L"％";
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(49, 101);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(62, 18);
+			this->label4->TabIndex = 3;
+			this->label4->Text = L"終了時";
 			// 
 			// numericUpDown1
 			// 
@@ -146,34 +177,9 @@ namespace My2DEffectEditor {
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &ImageForm::button1_Click);
 			// 
-			// numericUpDown2
+			// openFileDialog1
 			// 
-			this->numericUpDown2->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(128)));
-			this->numericUpDown2->ImeMode = System::Windows::Forms::ImeMode::Disable;
-			this->numericUpDown2->Location = System::Drawing::Point(156, 99);
-			this->numericUpDown2->Name = L"numericUpDown2";
-			this->numericUpDown2->Size = System::Drawing::Size(97, 25);
-			this->numericUpDown2->TabIndex = 1;
-			this->numericUpDown2->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(259, 101);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(26, 18);
-			this->label2->TabIndex = 2;
-			this->label2->Text = L"％";
-			// 
-			// label4
-			// 
-			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(49, 101);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(62, 18);
-			this->label4->TabIndex = 3;
-			this->label4->Text = L"終了時";
+			this->openFileDialog1->FileName = L"openFileDialog1";
 			// 
 			// ImageForm
 			// 
@@ -192,15 +198,25 @@ namespace My2DEffectEditor {
 			this->Text = L"ImageForm";
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
 	private: System::Void numericUpDown1_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
 	}
-private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-}
-};
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+			String^ filename = openFileDialog1->FileName;
+			try {
+				// ノードのイメージを設定する
+				// 選択されているノードのイメージ = Image::FromFile(filename);
+			}
+			catch (Exception^ ex) {
+				;
+			}
+		}
+	}
+	};
 }

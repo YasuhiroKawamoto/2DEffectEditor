@@ -166,7 +166,7 @@ namespace My2DEffectEditor {
 		// gr->Clear(Color::Black);
 
 
-		if (m_oldFrame != m_frame)
+		//if (m_oldFrame != m_frame)
 		{
 			pNode->Draw(gr);
 			myBuffer->Render();
