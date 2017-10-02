@@ -1,5 +1,6 @@
 #include "Node.h"
 
+
 using namespace std;
 
 // Nodeクラス //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,6 +36,24 @@ Node::~Node()
 	}
 }
 
+void Node::Update(float frame)
+{
+	for (auto& trans : m_Transform)
+	{
+		trans->Update(frame);
+	}
+		
+}
+
+void Node::Draw(Graphics^ gr)
+{
+	for (auto& trans : m_Transform)
+	{
+
+		gr->DrawImage(m_Image, trans->GetPosition().x, trans->GetPosition().y);
+	}
+}
+
 
 // Transformクラス ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -47,4 +66,14 @@ Transform::Transform()
 // デストラクタ
 Transform::~Transform()
 {
+}
+
+void Transform::Update(float frame)
+{
+	Vector2 vec;
+
+	vec.x = cosf(m_MoveAngle) * m_MoveAmount * frame;
+	vec.y = sinf(m_MoveAngle) * m_MoveAmount * frame;
+
+	SetPosition(vec);
 }

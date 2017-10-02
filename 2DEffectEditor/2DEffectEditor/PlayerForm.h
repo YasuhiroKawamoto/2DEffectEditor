@@ -1,8 +1,7 @@
 #pragma once
 
 
-
-namespace PlayerForm {
+namespace My2DEffectEditor {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -41,7 +40,7 @@ namespace PlayerForm {
 
 	protected:
 	private: System::Windows::Forms::Button^  button2;
-	private: System::Windows::Forms::TrackBar^  trackBar1;
+
 	private: System::Windows::Forms::Button^  button1;
 
 			 // ƒƒ“ƒo•Ï”
@@ -50,6 +49,7 @@ namespace PlayerForm {
 		bool timerEnable;
 	private: System::Windows::Forms::Timer^  timer1;
 	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::TrackBar^  trackBar1;
 	private: System::ComponentModel::IContainer^  components;
 
 
@@ -122,11 +122,15 @@ namespace PlayerForm {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(779, 86);
+			this->ClientSize = System::Drawing::Size(779, 130);
+			this->ControlBox = false;
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->trackBar1);
 			this->Controls->Add(this->button2);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
 			this->Name = L"PlayerForm";
 			this->ShowInTaskbar = false;
 			this->Text = L"Frame";
@@ -141,6 +145,7 @@ namespace PlayerForm {
 
 		trackBar1->Maximum = 30;
 		trackBar1->Minimum = 1;
+		trackBar1->ForeColor = Color::Blue;
 
 		trackBar1->TickStyle = TickStyle::None;
 
@@ -165,7 +170,7 @@ namespace PlayerForm {
 		}
 	}
 	private: System::Void timer1_Tick_1(System::Object^  sender, System::EventArgs^  e) {
-		this->Text = frame.ToString("000") + L"/30";
+		this->Text = frame.ToString("000") + L"/30 ƒtƒŒ[ƒ€";
 		this->ControlBox = false;
 
 		if (timerEnable)

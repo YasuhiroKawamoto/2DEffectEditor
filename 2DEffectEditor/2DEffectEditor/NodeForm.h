@@ -5,7 +5,9 @@
 #include "Node.h"
 #include "NodeManager.h"
 
+
 namespace My2DEffectEditor {
+
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -50,8 +52,8 @@ namespace My2DEffectEditor {
 
 	private: int i = 0;
 
-	//private: NodeManager* pNodeManager = NodeManager().GetInstance().get();
-	//private: std::unique_ptr<NodeManager> NodeM;
+			 //private: NodeManager* pNodeManager = NodeManager().GetInstance().get();
+			 //private: std::unique_ptr<NodeManager> NodeM;
 	private: NodeManager* pNodeManager = new NodeManager();
 	private: Node* pNode;
 	private: System::Windows::Forms::TextBox^  textBox1;
@@ -155,7 +157,7 @@ namespace My2DEffectEditor {
 		}
 #pragma endregion
 	private: System::Void treeView1_AfterSelect(System::Object^  sender, System::Windows::Forms::TreeViewEventArgs^  e) {
-		if (e->Action == TreeViewAction::ByMouse) 
+		if (e->Action == TreeViewAction::ByMouse)
 		{
 			// ‘I‘ð
 			string tag;
@@ -172,7 +174,7 @@ namespace My2DEffectEditor {
 				/*System::String^ s1 = gcnew System::String(pNode->GetTag().c_str());
 				textBox1->Text = s1;*/
 			}
-			
+
 
 		}
 	}
@@ -240,9 +242,9 @@ namespace My2DEffectEditor {
 			}
 		}
 	}
-private: System::Void textBox1_TextChanged_1(System::Object^  sender, System::EventArgs^  e) {
-}
-};
+	private: System::Void textBox1_TextChanged_1(System::Object^  sender, System::EventArgs^  e) {
+	}
+	};
 
 
 }

@@ -3,6 +3,7 @@
 #include "ParameterForm1.h"
 #include "ParameterForm2.h"
 #include "ConfigForm.h"
+#include "EffectForm.h"
 #include "PlayerForm.h"
 
 namespace My2DEffectEditor {
@@ -26,6 +27,7 @@ namespace My2DEffectEditor {
 			//
 			//TODO: ここにコンストラクター コードを追加します
 			//
+
 		}
 
 	protected:
@@ -41,10 +43,21 @@ namespace My2DEffectEditor {
 		}
 
 	private:
+		int m_frame;
+
+		ParameterForm1^ paramaterForm1 = gcnew ParameterForm1;
+		ParameterForm2^ paramaterForm2 = gcnew ParameterForm2;
+		PlayerForm^ playerForm = gcnew PlayerForm;
+		EffectForm^ effectForm = gcnew EffectForm;
+
+	private: System::Windows::Forms::Timer^  timer1;
+	private: System::ComponentModel::IContainer^  components;
+
+	private:
 		/// <summary>
 		/// 必要なデザイナー変数です。
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -53,13 +66,22 @@ namespace My2DEffectEditor {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
+			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->SuspendLayout();
+			// 
+			// timer1
+			// 
+			this->timer1->Enabled = true;
+			this->timer1->Interval = 1;
+			this->timer1->Tick += gcnew System::EventHandler(this, &MainForm::timer1_Tick);
 			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(278, 244);
+			this->DoubleBuffered = true;
 			this->Name = L"MainForm";
 			this->Text = L"MainForm";
 			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
@@ -69,21 +91,36 @@ namespace My2DEffectEditor {
 #pragma endregion
 	private: System::Void MainForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		this->IsMdiContainer = true;
+		this->WindowState = FormWindowState::Maximized;
 
 
-		ParameterForm1^ paramaterForm1 = gcnew ParameterForm1;
 		paramaterForm1->MdiParent = this;
 		paramaterForm1->Show();
 
 
-		ParameterForm2^ paramaterForm2 = gcnew ParameterForm2;
 		paramaterForm2->MdiParent = this;
 		paramaterForm2->Show();
 
-		PlayerForm::PlayerForm^ PlayerForm = gcnew PlayerForm::PlayerForm;
-		paramaterForm1->MdiParent = this;
-		paramaterForm1->Show();
 
+		playerForm->MdiParent = this;
+		playerForm->Show();
+
+		effectForm->MdiParent = this;
+		effectForm->Show();
+
+	}
+	public: int GetFrame()
+	{
+		return m_frame;
+	}
+
+	public: void SetFrame(int frame)
+	{
+		m_frame = frame;
+	}
+	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
+		m_frame = playerForm->GetFrame();
+		effectForm->SetFrame(m_frame);
 	}
 	};
 }
