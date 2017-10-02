@@ -63,3 +63,21 @@ Node * NodeManager::SearchNode(std::string tag)
 	}*/
 	return nullptr;
 }
+
+Node * NodeManager::DeleteNode(std::string tag)
+{
+	for (vector<unique_ptr<Node>>::iterator it = m_NodeArray.begin();
+		it != m_NodeArray.end();)
+	{
+		if ((*it)->GetTag() == tag)
+		{
+			it = m_NodeArray.erase(it);
+			return nullptr;
+		}
+		else
+		{
+			it++;
+		}
+	}
+	return nullptr;
+}

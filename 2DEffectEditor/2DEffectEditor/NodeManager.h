@@ -23,6 +23,7 @@ public:
 	void CreateNode(const std::string& tag, Node* parent = nullptr);
 
 	Node* SearchNode(std::string tag);
+	Node* DeleteNode(std::string tag);
 
 private:
 	
