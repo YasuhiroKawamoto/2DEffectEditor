@@ -11,11 +11,11 @@ class NodeManager
 {
 public:
 	// NodeManagerクラスのインスタンスを取得する
-	static std::unique_ptr<NodeManager> GetInstance();
-
+	//static std::unique_ptr<NodeManager> GetInstance();
+	static NodeManager* GetInstance();
 private:
 	// NodeManagerクラスのインスタンス
-	static std::unique_ptr<NodeManager> m_Manager;
+	static NodeManager* m_Manager;
 
 public:
 	// コンストラクタ
@@ -25,8 +25,14 @@ public:
 	Node* SearchNode(std::string tag);
 	Node* DeleteNode(std::string tag);
 
-private:
-	
+	Node* GetNode() { return m_Node; }
+	void SetSelectNode(Node* node) { m_Node = node; };
+	void SetNode(std::string tag, Node* node);
+	std::vector<std::unique_ptr<Node>>& GetNodes();
 
+private:
+
+	Node* m_Node;
 	std::vector<std::unique_ptr<Node>> m_NodeArray;
+
 };

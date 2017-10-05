@@ -7,19 +7,17 @@ using namespace std;
 
 // コンストラクタ
 Node::Node()
-{	
+{
 	m_Transform.resize(1);
-	for (vector<Transform*>::iterator it = m_Transform.begin();
-		it != m_Transform.end();
-		it++)
+	for (vector<Transform*>::size_type i = 0; i < m_Transform.size(); i++)
 	{
-		(*it) = new Transform();
+		m_Transform[i] = new Transform();
 	}
 	/*for (vector<std::unique_ptr<Transform>>::iterator it = m_Transform.begin();
-		it != m_Transform.end();
-		it++)
+	it != m_Transform.end();
+	it++)
 	{
-		(*it) = make_unique<Transform>();
+	(*it) = make_unique<Transform>();
 	}*/
 	m_Parent = nullptr;
 	m_Image = nullptr;
@@ -28,12 +26,10 @@ Node::Node()
 // デストラクタ
 Node::~Node()
 {
-	for (vector<Transform*>::iterator it = m_Transform.begin();
-		it != m_Transform.end();
-		it++)
+	/*for (vector<Transform*>::size_type i = 0; i < m_Transform.size(); i++)
 	{
-		delete (*it);
-	}
+	delete m_Transform[i];
+	}*/
 }
 
 void Node::Update(float frame)
@@ -42,7 +38,7 @@ void Node::Update(float frame)
 	{
 		trans->Update(frame);
 	}
-		
+
 }
 
 void Node::Draw(Graphics^ gr)
@@ -52,6 +48,7 @@ void Node::Draw(Graphics^ gr)
 	for (auto& trans : m_Transform)
 	{
 		gr->DrawImage(m_Image, trans->GetPosition().x, trans->GetPosition().y);
+
 	}
 }
 
@@ -61,7 +58,13 @@ void Node::Draw(Graphics^ gr)
 // コンストラクタ
 Transform::Transform()
 {
+	m_Position.x = 0.0f;
+	m_Position.y = 0.0f;
+	m_Scale.x = 0.0f;
+	m_Scale.y = 0.0f;
 	m_Rotate = 0.0f;
+	m_MoveAngle = 0.0f;
+	m_MoveAmount = 0.0f;
 }
 
 // デストラクタ
@@ -73,8 +76,8 @@ void Transform::Update(float frame)
 {
 	Vector2 vec;
 
-	vec.x = cosf(m_MoveAngle*(3.141593f / 180)) * m_MoveAmount * (frame-1);
-	vec.y = sinf(m_MoveAngle*(3.141593f / 180)) * m_MoveAmount * (frame-1);
+	vec.x = cosf(m_MoveAngle*(3.141593f / 180)) * m_MoveAmount * (frame - 1);
+	vec.y = sinf(m_MoveAngle*(3.141593f / 180)) * m_MoveAmount * (frame - 1);
 
 	Vector2 nodeVec;
 	nodeVec.x = 85;

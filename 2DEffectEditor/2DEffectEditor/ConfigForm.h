@@ -23,26 +23,26 @@ namespace My2DEffectEditor {
 			//
 		}
 
-	/// <summary>
-	/// エフェクトのフレーム数を取得
-	/// </summary>
+		/// <summary>
+		/// エフェクトのフレーム数を取得
+		/// </summary>
 	public: int GetFrameRate()
 	{
 		return System::Convert::ToInt32(numericUpDown1->Value);
 	}
 
 
-	/// <summary>
-	/// 1コマの幅を取得
-	/// </summary>
+			/// <summary>
+			/// 1コマの幅を取得
+			/// </summary>
 	public: int GetImageWidth()
 	{
 		return System::Convert::ToInt32(numericUpDown2->Value);
 	}
 
-	/// <summary>
-	/// 1コマの高さを取得
-	/// </summary>
+			/// <summary>
+			/// 1コマの高さを取得
+			/// </summary>
 	public: int GetImageHeight()
 	{
 		return System::Convert::ToInt32(numericUpDown3->Value);
@@ -62,6 +62,18 @@ namespace My2DEffectEditor {
 	private: System::Windows::Forms::GroupBox^  groupBox1;
 	protected:
 
+
+	private: bool isExiting = false;
+	public: bool IsExting()
+	{
+		return isExiting;
+	}
+
+
+	public: void SetExting(bool flag)
+	{
+		isExiting = flag;
+	}
 
 	private: System::Windows::Forms::Label^  label1;
 
@@ -246,7 +258,7 @@ namespace My2DEffectEditor {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(378, 376);
+			this->ClientSize = System::Drawing::Size(373, 341);
 			this->ControlBox = false;
 			this->Controls->Add(this->groupBox2);
 			this->Controls->Add(this->groupBox1);
@@ -255,7 +267,8 @@ namespace My2DEffectEditor {
 			this->MinimizeBox = false;
 			this->Name = L"ConfigForm";
 			this->ShowInTaskbar = false;
-			this->Text = L"ConfigForm";
+			this->FormClosed += gcnew System::Windows::Forms::FormClosedEventHandler(this, &ConfigForm::ConfigForm_FormClosed);
+			this->Load += gcnew System::EventHandler(this, &ConfigForm::ConfigForm_Load);
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
@@ -267,5 +280,10 @@ namespace My2DEffectEditor {
 
 		}
 #pragma endregion
+	private: System::Void ConfigForm_Load(System::Object^  sender, System::EventArgs^  e) {
+	}
+	private: System::Void ConfigForm_FormClosed(System::Object^  sender, System::Windows::Forms::FormClosedEventArgs^  e) {
+		isExiting = false;
+	}
 };
 }

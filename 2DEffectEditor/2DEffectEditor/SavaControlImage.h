@@ -216,46 +216,13 @@ namespace My2DEffectEditor {
 			bmp = ChainVertical(bmp, bmpH);
 		}
 		// 1つにまとめる
-		if (bmp)	bmp->Save("Resources\\Effects\\Effect.png", System::Drawing::Imaging::ImageFormat::Png);
+		if (bmp)	bmp->Save("Effects\\Effect.png", System::Drawing::Imaging::ImageFormat::Png);
 
 		// 初期化
 		bmp = nullptr;
 		cnt = 0;
 		bmpArray->Clear();
 
-		// 一列ごとに出力してつなげる
-		// 画像を結合
-		//System::Drawing::Bitmap^ bmp;	// 完成形となるもの
-		//bmp = gcnew System::Drawing::Bitmap("Resources\\1.png");
-		//// 横に連結する	
-		//for (int i = 0; i < FrameCnt; i++)
-		//{			
-		//	// 1つ先の画像を読み込む
-		//	System::Drawing::Bitmap^ bmpW = gcnew System::Drawing::Bitmap("Resources\\" + (i + 1) + ".png");
-		//	cnt++;
-		//	if(i != 0) bmp = ChainHorizontal(bmp, bmpW);
-		//	// 6の倍数になったら一行分書き出す
-		//	if (cnt % ROW_NUM == 0)
-		//	{
-		//		bmp->Save("Resources\\Effect" + cnt / ROW_NUM + ".png", System::Drawing::Imaging::ImageFormat::Png);
-		//		bmp = nullptr;
-		//	}	
-		//}
-		//// 6の倍数ではなくbmpの中身がnullptrじゃないとき 
-		//if (bmp)
-		//{
-		//	bmp->Save("Resources\\Effect" + cnt / ROW_NUM + ".png", System::Drawing::Imaging::ImageFormat::Png);
-		//	bmp = nullptr;
-		//}
-		//// 縦に連結する	 
-		//for (int i = 0; i < cnt / ROW_NUM; i++)
-		//{
-		//	// 1つ先の画像を読み込む
-		//	System::Drawing::Bitmap^ bmpH = gcnew System::Drawing::Bitmap("Resources\\Effect" + (i + 1) + ".png");
-		//	bmp = ChainVertical(bmp, bmpH);
-		//}
-		//// 1つにまとめる
-		//bmp->Save("Resources\\Effects\\Effect.png", System::Drawing::Imaging::ImageFormat::Png);
 	}
 
 	};

@@ -4,26 +4,29 @@ using namespace std;
 
 
 // staticの実体化
-unique_ptr<NodeManager> NodeManager::m_Manager;
+//unique_ptr<NodeManager> NodeManager::m_Manager;
+NodeManager* NodeManager::m_Manager;
 
-std::unique_ptr<NodeManager> NodeManager::GetInstance()
+NodeManager* NodeManager::GetInstance()
 {
 	if (m_Manager == nullptr)
 	{
-		// オブジェクを生成する
-		m_Manager = make_unique<NodeManager>();
+		return nullptr;
 	}
-	return move(m_Manager);
+	return m_Manager;
 }
 
 NodeManager::NodeManager()
 {
+	m_Manager = this;
 	for (vector<unique_ptr<Node>>::iterator it = m_NodeArray.begin();
 		it != m_NodeArray.end();
 		it++)
 	{
 		(*it) = make_unique<Node>();
 	}
+
+	m_Node = nullptr;
 }
 
 void NodeManager::CreateNode(const std::string& tag, Node * parent)
@@ -37,47 +40,61 @@ void NodeManager::CreateNode(const std::string& tag, Node * parent)
 
 Node * NodeManager::SearchNode(std::string tag)
 {
-	for (vector<unique_ptr<Node>>::iterator it = m_NodeArray.begin();
-		it != m_NodeArray.end();)
+	for (vector<unique_ptr<Node>>::size_type i = 0; i < m_NodeArray.size(); i++)
 	{
-		if ((*it)->GetTag() == tag)
+		if (m_NodeArray[i]->GetTag() == tag)
 		{
-			return (*it).get();
+			//m_Node.reset(m_NodeArray[i].get());
+			return m_NodeArray[i].get();
 		}
-		else
-		{
-			it++;
-		}		
 	}
 	/*for (vector<Node*>::iterator it = m_NodeArray.begin();
-		it != m_NodeArray.end();)
+	it != m_NodeArray.end();)
 	{
-		if ((*it)->GetTag() == tag)
-		{
-			return (*it);
-		}
-		else
-		{
-			it++;
-		}
+	if ((*it)->GetTag() == tag)
+	{
+	return (*it);
+	}
+	else
+	{
+	it++;
+	}
 	}*/
 	return nullptr;
 }
 
 Node * NodeManager::DeleteNode(std::string tag)
 {
+	for (vector<unique_ptr<Node>>::size_type i = 0; i < m_NodeArray.size(); i++)
+	{
+		if (m_NodeArray[i] == nullptr && m_NodeArray[i]->GetTag() == tag)
+		{
+			m_NodeArray.clear();
+			return nullptr;
+		}
+	}
+	return nullptr;
+}
+
+void NodeManager::SetNode(std::string tag, Node* node)
+{
 	for (vector<unique_ptr<Node>>::iterator it = m_NodeArray.begin();
 		it != m_NodeArray.end();)
 	{
 		if ((*it)->GetTag() == tag)
 		{
-			it = m_NodeArray.erase(it);
-			return nullptr;
+			(*it).reset(node);
+			return;
 		}
 		else
 		{
 			it++;
 		}
 	}
-	return nullptr;
+	return;
+}
+
+vector<std::unique_ptr<Node>>& NodeManager::GetNodes()
+{
+	return m_NodeArray;
 }

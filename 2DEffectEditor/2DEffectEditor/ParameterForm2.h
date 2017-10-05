@@ -1,5 +1,12 @@
 #pragma once
 
+//#include "NodeForm.h"	
+#include <string>	
+#include <memory>	
+#include "Node.h"	
+#include "NodeManager.h"	
+#include "Vector2.h"
+
 namespace My2DEffectEditor {
 
 	using namespace System;
@@ -8,6 +15,18 @@ namespace My2DEffectEditor {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace std;
+
+	struct Parameter2
+	{
+		int moveAmount;			// 移動量
+		int moveAmountError;	// 移動量誤差
+		int angle;				// 発生終了フレーム
+		int angleError;			// 発生パターン
+		int scaleX;				// 縮小
+		int scaleY;				// 拡大
+		int ImageAngle;			// 画像の回転
+	};
 
 	/// <summary>
 	/// ParameterForm2 の概要
@@ -15,12 +34,24 @@ namespace My2DEffectEditor {
 	public ref class ParameterForm2 : public System::Windows::Forms::Form
 	{
 	public:
+		static ParameterForm2^ GetInstance() {
+			if (m_instance == nullptr)
+			{
+				return nullptr;
+			}
+			return m_instance;
+		}
+	private:
+		static ParameterForm2^ m_instance;
+
+	public:
 		ParameterForm2(void)
 		{
 			InitializeComponent();
 			//
 			//TODO: ここにコンストラクター コードを追加します
 			//
+			m_instance = this;
 		}
 
 	/// <summary>
@@ -78,6 +109,56 @@ namespace My2DEffectEditor {
 		return System::Convert::ToInt32(numericUpDown7->Value);
 	}
 
+
+			/// <summary>	
+			/// 移動量を設定	
+			/// </summary>	
+	public: void SetMoveAmount(const int& value)
+	{
+		numericUpDown1->Value = value;
+	}
+			/// <summary>	
+			/// 移動量の誤差を設定	
+			/// </summary>	
+	public: void SetMoveAmountError(const int& value)
+	{
+		numericUpDown2->Value = value;
+	}
+			/// <summary>	
+			/// 発射方向(角度)を設定	
+			/// </summary>	
+	public: void SetMoveAngle(const int& value)
+	{
+		numericUpDown3->Value = value;
+	}
+			/// <summary>	
+			/// 発射方向のブレ(角度)を設定	
+			/// </summary>	
+	public: void SetMoveAngleError(const int& value)
+	{
+		numericUpDown4->Value = value;
+	}
+			/// <summary>	
+			/// X方向の拡大率を設定	
+			/// </summary>	
+	public: void SetScaleX(const int& value)
+	{
+		numericUpDown5->Value = value;
+	}
+			/// <summary>	
+			/// Y方向の拡大率を設定	
+			/// </summary>	
+	public: void SetScaleY(const int value)
+	{
+		numericUpDown6->Value = value;
+	}
+			/// <summary>	
+			/// 画像の回転角(角度)を設定	
+			/// </summary>	
+	public: void SetImageRot(const int value)
+	{
+		numericUpDown7->Value = value;
+	}
 	protected:
 		/// <summary>
 		/// 使用中のリソースをすべてクリーンアップします。
@@ -92,11 +173,6 @@ namespace My2DEffectEditor {
 
 	private: System::Windows::Forms::Label^  label2;
 	protected:
-
-	protected:
-
-
-
 
 
 	private: System::Windows::Forms::GroupBox^  groupBox1;
@@ -146,11 +222,8 @@ namespace My2DEffectEditor {
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown6;
 private: System::Windows::Forms::Label^  label14;
 
-
-
-
-
-
+			 float scaleX = 0.0f;
+			 float scaleY = 0.0f;
 
 	private:
 		/// <summary>
@@ -167,6 +240,7 @@ private: System::Windows::Forms::Label^  label14;
 		{
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->label14 = (gcnew System::Windows::Forms::Label());
 			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->label11 = (gcnew System::Windows::Forms::Label());
@@ -188,7 +262,6 @@ private: System::Windows::Forms::Label^  label14;
 			this->numericUpDown7 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->label14 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->BeginInit();
@@ -226,12 +299,21 @@ private: System::Windows::Forms::Label^  label14;
 			this->groupBox1->Controls->Add(this->label3);
 			this->groupBox1->Controls->Add(this->label1);
 			this->groupBox1->ImeMode = System::Windows::Forms::ImeMode::Alpha;
-			this->groupBox1->Location = System::Drawing::Point(25, 22);
+			this->groupBox1->Location = System::Drawing::Point(12, 12);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(499, 225);
+			this->groupBox1->Size = System::Drawing::Size(554, 225);
 			this->groupBox1->TabIndex = 0;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"移動";
+			// 
+			// label14
+			// 
+			this->label14->AutoSize = true;
+			this->label14->Location = System::Drawing::Point(456, 170);
+			this->label14->Name = L"label14";
+			this->label14->Size = System::Drawing::Size(26, 18);
+			this->label14->TabIndex = 4;
+			this->label14->Text = L"度";
 			// 
 			// numericUpDown1
 			// 
@@ -257,7 +339,7 @@ private: System::Windows::Forms::Label^  label14;
 			// label11
 			// 
 			this->label11->AutoSize = true;
-			this->label11->Location = System::Drawing::Point(255, 173);
+			this->label11->Location = System::Drawing::Point(348, 170);
 			this->label11->Name = L"label11";
 			this->label11->Size = System::Drawing::Size(26, 18);
 			this->label11->TabIndex = 0;
@@ -277,28 +359,30 @@ private: System::Windows::Forms::Label^  label14;
 			// 
 			this->numericUpDown4->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->numericUpDown4->ImeMode = System::Windows::Forms::ImeMode::Disable;
-			this->numericUpDown4->Location = System::Drawing::Point(287, 169);
+			this->numericUpDown4->Location = System::Drawing::Point(380, 166);
 			this->numericUpDown4->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 359, 0, 0, 0 });
 			this->numericUpDown4->Name = L"numericUpDown4";
 			this->numericUpDown4->Size = System::Drawing::Size(70, 25);
 			this->numericUpDown4->TabIndex = 3;
 			this->numericUpDown4->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
+			this->numericUpDown4->ValueChanged += gcnew System::EventHandler(this, &ParameterForm2::numericUpDown4_ValueChanged);
 			// 
 			// numericUpDown3
 			// 
 			this->numericUpDown3->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->numericUpDown3->ImeMode = System::Windows::Forms::ImeMode::Disable;
-			this->numericUpDown3->Location = System::Drawing::Point(123, 169);
+			this->numericUpDown3->Location = System::Drawing::Point(216, 166);
 			this->numericUpDown3->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 359, 0, 0, 0 });
 			this->numericUpDown3->Name = L"numericUpDown3";
 			this->numericUpDown3->Size = System::Drawing::Size(70, 25);
 			this->numericUpDown3->TabIndex = 2;
 			this->numericUpDown3->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
+			this->numericUpDown3->ValueChanged += gcnew System::EventHandler(this, &ParameterForm2::numericUpDown3_ValueChanged);
 			// 
 			// label10
 			// 
 			this->label10->AutoSize = true;
-			this->label10->Location = System::Drawing::Point(202, 173);
+			this->label10->Location = System::Drawing::Point(295, 170);
 			this->label10->Name = L"label10";
 			this->label10->Size = System::Drawing::Size(26, 18);
 			this->label10->TabIndex = 0;
@@ -341,9 +425,9 @@ private: System::Windows::Forms::Label^  label14;
 			this->groupBox2->Controls->Add(this->label4);
 			this->groupBox2->Controls->Add(this->label5);
 			this->groupBox2->ImeMode = System::Windows::Forms::ImeMode::Alpha;
-			this->groupBox2->Location = System::Drawing::Point(25, 280);
+			this->groupBox2->Location = System::Drawing::Point(12, 255);
 			this->groupBox2->Name = L"groupBox2";
-			this->groupBox2->Size = System::Drawing::Size(499, 88);
+			this->groupBox2->Size = System::Drawing::Size(554, 88);
 			this->groupBox2->TabIndex = 0;
 			this->groupBox2->TabStop = false;
 			this->groupBox2->Text = L"拡縮";
@@ -358,22 +442,24 @@ private: System::Windows::Forms::Label^  label14;
 			this->numericUpDown5->Size = System::Drawing::Size(90, 25);
 			this->numericUpDown5->TabIndex = 4;
 			this->numericUpDown5->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
+			this->numericUpDown5->ValueChanged += gcnew System::EventHandler(this, &ParameterForm2::numericUpDown5_ValueChanged);
 			// 
 			// numericUpDown6
 			// 
 			this->numericUpDown6->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->numericUpDown6->ImeMode = System::Windows::Forms::ImeMode::Disable;
-			this->numericUpDown6->Location = System::Drawing::Point(345, 38);
+			this->numericUpDown6->Location = System::Drawing::Point(361, 38);
 			this->numericUpDown6->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1000, 0, 0, 0 });
 			this->numericUpDown6->Name = L"numericUpDown6";
 			this->numericUpDown6->Size = System::Drawing::Size(90, 25);
 			this->numericUpDown6->TabIndex = 5;
 			this->numericUpDown6->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
+			this->numericUpDown6->ValueChanged += gcnew System::EventHandler(this, &ParameterForm2::numericUpDown6_ValueChanged);
 			// 
 			// label13
 			// 
 			this->label13->AutoSize = true;
-			this->label13->Location = System::Drawing::Point(441, 40);
+			this->label13->Location = System::Drawing::Point(457, 40);
 			this->label13->Name = L"label13";
 			this->label13->Size = System::Drawing::Size(26, 18);
 			this->label13->TabIndex = 0;
@@ -400,7 +486,7 @@ private: System::Windows::Forms::Label^  label14;
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(268, 40);
+			this->label5->Location = System::Drawing::Point(284, 40);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(55, 18);
 			this->label5->TabIndex = 0;
@@ -413,9 +499,9 @@ private: System::Windows::Forms::Label^  label14;
 			this->groupBox3->Controls->Add(this->label8);
 			this->groupBox3->Controls->Add(this->label6);
 			this->groupBox3->ImeMode = System::Windows::Forms::ImeMode::Alpha;
-			this->groupBox3->Location = System::Drawing::Point(25, 400);
+			this->groupBox3->Location = System::Drawing::Point(12, 363);
 			this->groupBox3->Name = L"groupBox3";
-			this->groupBox3->Size = System::Drawing::Size(499, 86);
+			this->groupBox3->Size = System::Drawing::Size(554, 86);
 			this->groupBox3->TabIndex = 0;
 			this->groupBox3->TabStop = false;
 			this->groupBox3->Text = L"画像の回転";
@@ -430,6 +516,7 @@ private: System::Windows::Forms::Label^  label14;
 			this->numericUpDown7->Size = System::Drawing::Size(70, 25);
 			this->numericUpDown7->TabIndex = 6;
 			this->numericUpDown7->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
+			this->numericUpDown7->ValueChanged += gcnew System::EventHandler(this, &ParameterForm2::numericUpDown7_ValueChanged);
 			// 
 			// label8
 			// 
@@ -449,30 +536,22 @@ private: System::Windows::Forms::Label^  label14;
 			this->label6->TabIndex = 0;
 			this->label6->Text = L"角度";
 			// 
-			// label14
-			// 
-			this->label14->AutoSize = true;
-			this->label14->Location = System::Drawing::Point(363, 173);
-			this->label14->Name = L"label14";
-			this->label14->Size = System::Drawing::Size(26, 18);
-			this->label14->TabIndex = 4;
-			this->label14->Text = L"度";
-			// 
 			// ParameterForm2
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(554, 548);
+			this->ClientSize = System::Drawing::Size(578, 477);
 			this->ControlBox = false;
 			this->Controls->Add(this->groupBox3);
 			this->Controls->Add(this->groupBox2);
 			this->Controls->Add(this->groupBox1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
+			this->Location = System::Drawing::Point(925, 180);
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;
 			this->Name = L"ParameterForm2";
 			this->ShowInTaskbar = false;
-			this->Text = L"ParameterForm2";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
@@ -491,8 +570,65 @@ private: System::Windows::Forms::Label^  label14;
 		}
 #pragma endregion
 
+		public: void InfoUpdate(Parameter2* pm2)
+		{
+			pm2->angle = this->GetMoveAngle();
+			pm2->angleError = this->GetMoveAngleError();
+			pm2->ImageAngle = this->GetImageRot();
+			pm2->moveAmount = this->GetMoveAmount();
+			pm2->moveAmountError = this->GetMoveAmountError();
+			pm2->scaleX = this->GetScaleX();
+			pm2->scaleY = this->GetScaleY();
+		}
+				// 移動量
+		private: System::Void numericUpDown1_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+			for (vector<Transform>::size_type i = 0; i < NodeManager::GetInstance()->GetNode()->GetTransform().size(); i++)
+			{
+				NodeManager::GetInstance()->GetNode()->GetTransform()[i]->SetMoveAmount(GetMoveAmount());
+			}
+		}
+				 // 移動量誤差
+		private: System::Void numericUpDown2_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
 
-private: System::Void numericUpDown1_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
-}
+		}
+				 // 発射方向
+		private: System::Void numericUpDown3_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+			for (vector<Transform>::size_type i = 0; i < NodeManager::GetInstance()->GetNode()->GetTransform().size(); i++)
+			{
+				NodeManager::GetInstance()->GetNode()->GetTransform()[i]->SetMoveAngle(GetMoveAngle());
+			}
+		}
+				 // 発射方向+-
+		private: System::Void numericUpDown4_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+		}
+				 // 拡縮X
+		private: System::Void numericUpDown5_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+			scaleX = (float)GetScaleX();
+			Vector2 vec2;
+			vec2.x = scaleX;
+			vec2.y = scaleY;
+			for (vector<Transform>::size_type i = 0; i < NodeManager::GetInstance()->GetNode()->GetTransform().size(); i++)
+			{
+				NodeManager::GetInstance()->GetNode()->GetTransform()[i]->SetScale(vec2);
+			}
+		}
+				 // 拡縮Y
+		private: System::Void numericUpDown6_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+			scaleY = (float)GetScaleY();
+			Vector2 vec2;
+			vec2.x = scaleX;
+			vec2.y = scaleY;
+			for (vector<Transform>::size_type i = 0; i < NodeManager::GetInstance()->GetNode()->GetTransform().size(); i++)
+			{
+				NodeManager::GetInstance()->GetNode()->GetTransform()[i]->SetScale(vec2);
+			}
+		}
+				 // 画像の回転
+		private: System::Void numericUpDown7_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
+			for (vector<Transform>::size_type i = 0; i < NodeManager::GetInstance()->GetNode()->GetTransform().size(); i++)
+			{
+				NodeManager::GetInstance()->GetNode()->GetTransform()[i]->SetRotate(GetImageRot());
+			}
+		}
 };
 }

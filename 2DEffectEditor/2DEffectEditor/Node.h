@@ -58,6 +58,7 @@ public:
 	// 画像
 	void SetTag(const std::string& Tag) { m_Tag = Tag; }
 
+
 	//更新
 	void Update(float frame);
 
@@ -67,7 +68,7 @@ public:
 
 private:
 	std::vector<Transform*> m_Transform; // トランスフォーム
-	//std::vector<std::unique_ptr<Transform>> m_Transform;
+										 //std::vector<std::unique_ptr<Transform>> m_Transform;
 	Node* m_Parent;				// 親
 	gcroot<Image^> m_Image;				// 画像
 
@@ -86,20 +87,24 @@ public:
 
 	// Getter //////////////////////////////////////////////////////////////
 
-	// 座標
-	const Vector2& GetPosition() { return m_Position; }
-	// 拡大率
+	// 座標の取得
+	Vector2& GetPosition() { return m_Position; }
+	// 拡大率の取得
 	const Vector2& GetScale() { return m_Scale; }
-	// 回転
+	// 回転の取得
 	const float& GetRotate() { return m_Rotate; }
+	// 移動量の取得
+	const float& GetMoveAmount() { return m_MoveAmount; }
+	// 移動方向の取得
+	const float& GettMoveAngle() { return m_MoveAngle; }
 
 	// Setter //////////////////////////////////////////////////////////////
 
-	// 座標
+	// 座標の設定
 	void SetPosition(const Vector2& position) { m_Position = position; }
-	// 拡大率
+	// 拡大率の設定
 	void SetScale(const Vector2& scale) { m_Scale = scale; }
-	// 回転
+	// 回転の設定
 	void SetRotate(const float& rotate) { m_Rotate = rotate; }
 
 	// 移動量の設定
@@ -110,7 +115,7 @@ public:
 	// 座標の更新
 	void Update(float frame);
 
-	
+
 private:
 	Vector2 m_Position;		// 座標
 	Vector2 m_Scale;		// 拡大率

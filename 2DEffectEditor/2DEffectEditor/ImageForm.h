@@ -1,5 +1,6 @@
 #pragma once
 
+#include "NodeManager.h"
 namespace My2DEffectEditor {
 
 	using namespace System;
@@ -99,7 +100,7 @@ namespace My2DEffectEditor {
 			this->groupBox1->Controls->Add(this->label3);
 			this->groupBox1->Controls->Add(this->label1);
 			this->groupBox1->ImeMode = System::Windows::Forms::ImeMode::Alpha;
-			this->groupBox1->Location = System::Drawing::Point(28, 125);
+			this->groupBox1->Location = System::Drawing::Point(12, 84);
 			this->groupBox1->Name = L"groupBox1";
 			this->groupBox1->Size = System::Drawing::Size(335, 152);
 			this->groupBox1->TabIndex = 1;
@@ -169,7 +170,7 @@ namespace My2DEffectEditor {
 			// 
 			this->button1->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
-			this->button1->Location = System::Drawing::Point(28, 33);
+			this->button1->Location = System::Drawing::Point(12, 12);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(181, 40);
 			this->button1->TabIndex = 2;
@@ -185,7 +186,7 @@ namespace My2DEffectEditor {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(378, 354);
+			this->ClientSize = System::Drawing::Size(358, 252);
 			this->ControlBox = false;
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->groupBox1);
@@ -195,7 +196,9 @@ namespace My2DEffectEditor {
 			this->Name = L"ImageForm";
 			this->ShowIcon = false;
 			this->ShowInTaskbar = false;
-			this->Text = L"ImageForm";
+
+			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
+			this->Load += gcnew System::EventHandler(this, &ImageForm::ImageForm_Load);
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->EndInit();
@@ -207,16 +210,20 @@ namespace My2DEffectEditor {
 	private: System::Void numericUpDown1_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+		{
 			String^ filename = openFileDialog1->FileName;
 			try {
 				// ノードのイメージを設定する
 				// 選択されているノードのイメージ = Image::FromFile(filename);
+				NodeManager::GetInstance()->GetNode()->SetImage(Image::FromFile(filename));
 			}
 			catch (Exception^ ex) {
 				;
 			}
 		}
 	}
-	};
+	private: System::Void ImageForm_Load(System::Object^  sender, System::EventArgs^  e) {
+	}
+};
 }

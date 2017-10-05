@@ -3,6 +3,11 @@
 #include <vector>
 
 #include "Node.h"
+#include "ParameterForm1.h"
+#include "ParameterForm2.h"
+
+#include "NodeManager.h"
+
 
 
 namespace My2DEffectEditor {
@@ -27,7 +32,6 @@ namespace My2DEffectEditor {
 			//TODO: ここにコンストラクター コードを追加します
 			//
 
-			pNode = new Node;
 			m_frame = 0;
 
 		}
@@ -45,8 +49,10 @@ namespace My2DEffectEditor {
 		}
 
 	private:
-		Node* pNode;
 		int m_frame;
+
+		Parameter1* m_para1;
+		Parameter2* m_para2;
 
 		BufferedGraphicsContext^ currentContext;
 		BufferedGraphics^ myBuffer;
@@ -91,7 +97,7 @@ namespace My2DEffectEditor {
 			// 
 			this->pictureBox1->Location = System::Drawing::Point(0, 0);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(382, 349);
+			this->pictureBox1->Size = System::Drawing::Size(380, 350);
 			this->pictureBox1->TabIndex = 0;
 			this->pictureBox1->TabStop = false;
 			this->pictureBox1->Click += gcnew System::EventHandler(this, &EffectForm::pictureBox1_Click);
@@ -118,6 +124,7 @@ namespace My2DEffectEditor {
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;
 			this->Name = L"EffectForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"EffectForm";
 			this->Load += gcnew System::EventHandler(this, &EffectForm::EffectForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
@@ -137,25 +144,6 @@ namespace My2DEffectEditor {
 			this->pictureBox1->DisplayRectangle);
 
 
-		// 各要素の挙動設定
-		{
-			std::vector<Transform*> m_trans;
-			m_trans.resize(15);
-
-			for (std::vector<Transform*>::size_type i = 0; i < m_trans.size(); i++)
-			{
-				m_trans[i] = new Transform();
-
-				// 各トランスフォームに拡散する角度を設定
-				m_trans[i]->SetMoveAngle((360 / 15) * i);
-
-				// 各トランスフォームに拡散する速度を設定
-				m_trans[i]->SetMoveAmount(3.0f);
-			}
-			pNode->SetTransform(m_trans);
-		}
-
-		pNode->SetImage(Image::FromFile("kr43.png"));
 
 		saveImage = gcnew Bitmap(pictureBox1->Width, pictureBox1->Height);
 		saveGrah = Graphics::FromImage(saveImage);
@@ -166,17 +154,28 @@ namespace My2DEffectEditor {
 		Graphics^ gr = myBuffer->Graphics;
 
 		// 仮バッファに描画
-		pNode->Draw(gr);
+		auto & nodes = NodeManager::GetInstance()->GetNodes();
 
-		// 描画内容をスクリーンに反映
-		myBuffer->Render();
+		for (auto& node : nodes)
+		{
+			if (static_cast<Image^>(node->GetImage()) != nullptr)
+			{
 
-		saveGrah->Clear(Color::Black);
-		pNode->Draw(saveGrah);
+				node->Draw(gr);
+
+				// ノードデータ更新
+				node->Update(m_frame);
+
+				// 描画内容をスクリーンに反映
+				myBuffer->Render();
+
+				// セーブメモリに描画
+				DrawSaveMap();
 
 
-		// ノードデータ更新
-		pNode->Update(m_frame);
+
+			}
+		}
 
 
 	}
@@ -192,6 +191,55 @@ namespace My2DEffectEditor {
 		return saveImage;
 	}
 
+	public: void  SetInfo(Parameter1* para1, Parameter2* para2)
+	{
+		m_para1 = para1;
+		m_para2 = para2;
+
+		// 各要素の挙動設定
+		{
+
+
+			std::vector<Transform*> m_trans;
+			m_trans.resize(m_para1->num);
+
+			for (std::vector<Transform*>::size_type i = 0; i < m_trans.size(); i++)
+			{
+				m_trans[i] = new Transform();
+
+				// 各トランスフォームに拡散する角度を設定
+				m_trans[i]->SetMoveAngle((360 / m_para1->num) * i);
+				// 各トランスフォームに拡散する速度を設定
+				m_trans[i]->SetMoveAmount(m_para2->moveAmount);
+
+				Vector2 nodeVec;
+				nodeVec.x = 80;
+				nodeVec.y = 80;
+
+				m_trans[i]->SetPosition(m_trans[i]->GetPosition() + nodeVec);
+			}
+
+			if (NodeManager::GetInstance()->GetNode() != nullptr)
+			{
+				NodeManager::GetInstance()->GetNode()->SetTransform(m_trans);
+
+				NodeManager::GetInstance()->GetNode()->Update(m_frame);
+			}
+
+		}
+	}
+	public: void DrawSaveMap()
+	{
+		auto & nodes = NodeManager::GetInstance()->GetNodes();
+
+		for (auto& node : nodes)
+		{
+			if (static_cast<Image^>(node->GetImage()) != nullptr)
+			{
+				node->Draw(saveGrah);
+			}
+		}
+	}
 	private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 	}
 	private: System::Void pictureBox1_Click(System::Object^  sender, System::EventArgs^  e) {

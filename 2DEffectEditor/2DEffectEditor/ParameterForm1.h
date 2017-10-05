@@ -9,39 +9,47 @@ namespace My2DEffectEditor {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	struct Parameter1
+	{
+		int num;	// 発生数
+		int sFrame;	// 発生開始フレーム
+		int eFrame; // 発生終了フレーム
+		int pattern;// 発生パターン
+	};
+
 	/// <summary>
 	/// ParameterForm1 の概要
 	/// </summary>
 	public ref class ParameterForm1 : public System::Windows::Forms::Form
 	{
 
-/// <summary>
-/// ノードの発生数を取得
-/// </summary>
+		/// <summary>
+		/// ノードの発生数を取得
+		/// </summary>
 	public: int GetNodeNumber()
 	{
 		return System::Convert::ToInt32(numericUpDown1->Value);
 	}
 
-	/// <summary>
-	/// ノードの発生開始フレームを取得
-	/// </summary>
+			/// <summary>
+			/// ノードの発生開始フレームを取得
+			/// </summary>
 	public: int GetNodeOccurFrame()
 	{
 		return System::Convert::ToInt32(numericUpDown2->Value);
 	}
 
-	/// <summary>
-	/// ノードの発生終了フレームを取得
-	/// </summary>
+			/// <summary>
+			/// ノードの発生終了フレームを取得
+			/// </summary>
 	public: int GetNodeVanishFrame()
 	{
 		return System::Convert::ToInt32(numericUpDown3->Value);
 	}
 
-	/// <summary>
-	/// ノードの発生パターン(int)を取得
-	/// </summary>
+			/// <summary>
+			/// ノードの発生パターン(int)を取得
+			/// </summary>
 	public: int GetNodeOccurPattern()
 	{
 		return System::Convert::ToInt32(comboBox1->SelectedIndex);
@@ -140,9 +148,9 @@ namespace My2DEffectEditor {
 			this->groupBox1->Controls->Add(this->label1);
 			this->groupBox1->Controls->Add(this->label2);
 			this->groupBox1->ImeMode = System::Windows::Forms::ImeMode::Alpha;
-			this->groupBox1->Location = System::Drawing::Point(27, 27);
+			this->groupBox1->Location = System::Drawing::Point(16, 10);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(550, 246);
+			this->groupBox1->Size = System::Drawing::Size(550, 245);
 			this->groupBox1->TabIndex = 0;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"発生";
@@ -248,16 +256,17 @@ namespace My2DEffectEditor {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(607, 344);
+			this->ClientSize = System::Drawing::Size(578, 268);
 			this->ControlBox = false;
 			this->Controls->Add(this->groupBox1);
 			this->Cursor = System::Windows::Forms::Cursors::Default;
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
+			this->Location = System::Drawing::Point(925, 0);
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;
 			this->Name = L"ParameterForm1";
 			this->ShowInTaskbar = false;
-			this->Text = L"ParameterForm1";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->Load += gcnew System::EventHandler(this, &ParameterForm1::ParameterForm1_Load);
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
@@ -270,15 +279,27 @@ namespace My2DEffectEditor {
 #pragma endregion
 
 	private: System::Void ParameterForm1_Load(System::Object^  sender, System::EventArgs^  e) {
-		comboBox1->Items->Add(L"一方向");
 		comboBox1->Items->Add(L"拡散");
-		comboBox1->Items->Add(L"集約");
-		comboBox1->Items->Add(L"なんかすげーやつ");
+		comboBox1->Items->Add(L"収束");
+		comboBox1->Items->Add(L"一方向");
+		comboBox1->Items->Add(L"ComingSoon...");
+
 
 		comboBox1->DropDownStyle = ComboBoxStyle::DropDownList;
 
 		comboBox1->SelectedIndex = 0;
 	}
+
+
+	public: void InfoUpdate(Parameter1* pm1)
+	{
+		pm1->num = GetNodeNumber();
+		pm1->sFrame = GetNodeOccurFrame();
+		pm1->eFrame = GetNodeVanishFrame();
+		pm1->pattern = GetNodeOccurPattern();
+	}
+
+
 	};
 
 }

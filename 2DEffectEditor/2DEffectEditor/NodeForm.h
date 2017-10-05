@@ -4,6 +4,7 @@
 #include <memory>
 #include "Node.h"
 #include "NodeManager.h"
+#include "ParameterForm2.h"
 
 
 namespace My2DEffectEditor {
@@ -55,7 +56,8 @@ namespace My2DEffectEditor {
 			 //private: NodeManager* pNodeManager = NodeManager().GetInstance().get();
 			 //private: std::unique_ptr<NodeManager> NodeM;
 	private: NodeManager* pNodeManager = new NodeManager();
-	private: Node* pNode;
+	private: Node* pNode = new Node();
+	private: String^ str;
 
 
 
@@ -68,7 +70,7 @@ namespace My2DEffectEditor {
 		/// 必要なデザイナー変数です。
 		/// </summary>
 		// 文字列の型を変換
-		void MarshalString(String ^ s, string& os) {
+	public:	void MarshalString(String ^ s, string& os) {
 			using namespace Runtime::InteropServices;
 			const char* chars =
 				(const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
@@ -92,7 +94,8 @@ namespace My2DEffectEditor {
 			// treeView1
 			// 
 			this->treeView1->Cursor = System::Windows::Forms::Cursors::Default;
-			this->treeView1->Location = System::Drawing::Point(48, 59);
+			this->treeView1->HideSelection = false;
+			this->treeView1->Location = System::Drawing::Point(39, 73);
 			this->treeView1->Name = L"treeView1";
 			this->treeView1->Size = System::Drawing::Size(279, 377);
 			this->treeView1->TabIndex = 0;
@@ -100,7 +103,7 @@ namespace My2DEffectEditor {
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(12, -2);
+			this->button1->Location = System::Drawing::Point(22, 14);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(75, 34);
 			this->button1->TabIndex = 1;
@@ -110,7 +113,7 @@ namespace My2DEffectEditor {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(128, -2);
+			this->button2->Location = System::Drawing::Point(124, 14);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(111, 34);
 			this->button2->TabIndex = 2;
@@ -120,7 +123,7 @@ namespace My2DEffectEditor {
 			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(291, -2);
+			this->button3->Location = System::Drawing::Point(260, 12);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(75, 36);
 			this->button3->TabIndex = 3;
@@ -132,19 +135,21 @@ namespace My2DEffectEditor {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(10, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(378, 454);
+			this->ClientSize = System::Drawing::Size(358, 462);
 			this->ControlBox = false;
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->treeView1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
+			this->Location = System::Drawing::Point(0, 170);
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;
 			this->Name = L"NodeForm";
 			this->ShowInTaskbar = false;
-			this->Text = L"NodeForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->ResumeLayout(false);
+
 
 		}
 #pragma endregion
@@ -153,20 +158,23 @@ namespace My2DEffectEditor {
 		{
 			// 選択
 			string tag;
-			MarshalString(e->Node->Tag->ToString(), tag);
+			str = e->Node->Tag->ToString();
+			MarshalString(str, tag);
 			pNode = pNodeManager->SearchNode(tag);
-			//if (pNode != nullptr)
-			//{
-			//	for (std::vector<Transform*>::size_type i = 0;
-			//		i<pNode->GetTransform().size();
-			//		i++)
-			//	{
-			//		textBox1->Text = pNode->GetTransform()[i]->GetRotate().ToString();
-			//	}
-			//	/*System::String^ s1 = gcnew System::String(pNode->GetTag().c_str());
-			//	textBox1->Text = s1;*/
-			//}
+			pNodeManager->SetSelectNode(pNode);
+			if (pNode != nullptr)
+			{
+				for (vector<Transform>::size_type i = 0; i < NodeManager::GetInstance()->GetNode()->GetTransform().size(); i++)
+				{
+					My2DEffectEditor::ParameterForm2::GetInstance()->SetMoveAmount(pNodeManager->GetNode()->GetTransform()[i]->GetMoveAmount());
+					My2DEffectEditor::ParameterForm2::GetInstance()->SetMoveAngle(pNodeManager->GetNode()->GetTransform()[i]->GettMoveAngle());
+					My2DEffectEditor::ParameterForm2::GetInstance()->SetScaleX(pNodeManager->GetNode()->GetTransform()[i]->GetScale().x);
+					My2DEffectEditor::ParameterForm2::GetInstance()->SetScaleY(pNodeManager->GetNode()->GetTransform()[i]->GetScale().y);
+					My2DEffectEditor::ParameterForm2::GetInstance()->SetImageRot(pNodeManager->GetNode()->GetTransform()[i]->GetRotate());
+				}
 
+
+			}
 
 		}
 	}
@@ -180,8 +188,8 @@ namespace My2DEffectEditor {
 		{
 			i++;
 			// 親ノード追加
-			TreeNode^ node = gcnew TreeNode("File" + i);
-			node->Tag = "File" + i;
+			TreeNode^ node = gcnew TreeNode("Node" + i);
+			node->Tag = "Node" + i;
 			this->treeView1->Nodes->Add(node);
 			string tag;
 			MarshalString(node->Tag->ToString(), tag);
@@ -191,8 +199,8 @@ namespace My2DEffectEditor {
 		{
 			i++;
 			// 親ノード挿入
-			TreeNode^ node = gcnew TreeNode("File" + i);
-			node->Tag = "File" + i;
+			TreeNode^ node = gcnew TreeNode("Node" + i);
+			node->Tag = "Node" + i;
 			this->treeView1->Nodes->Insert(
 				this->treeView1->SelectedNode->Index,
 				node);
@@ -208,8 +216,8 @@ namespace My2DEffectEditor {
 		if (this->treeView1->SelectedNode != nullptr)
 		{
 			i++;
-			TreeNode^ node = gcnew TreeNode("File" + i);
-			node->Tag = "File" + i;
+			TreeNode^ node = gcnew TreeNode("Node" + i);
+			node->Tag = "Node" + i;
 			this->treeView1->SelectedNode->Nodes->Add(
 				node);
 			this->treeView1->Select();
@@ -225,10 +233,9 @@ namespace My2DEffectEditor {
 			// 選択
 			string tag;
 			MarshalString(this->treeView1->SelectedNode->Tag->ToString(), tag);
-			pNode = pNodeManager->SearchNode(tag);
 			if (pNode != nullptr)
 			{
-				pNode = nullptr;
+				pNode = pNodeManager->DeleteNode(tag);
 			}
 			this->treeView1->SelectedNode->Remove();
 			this->treeView1->Select();

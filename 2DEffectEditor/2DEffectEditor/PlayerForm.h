@@ -129,10 +129,12 @@ namespace My2DEffectEditor {
 			this->Controls->Add(this->trackBar1);
 			this->Controls->Add(this->button2);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
+			this->Location = System::Drawing::Point(380, 480);
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;
 			this->Name = L"PlayerForm";
 			this->ShowInTaskbar = false;
+			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->Text = L"Frame";
 			this->Load += gcnew System::EventHandler(this, &PlayerForm::PlayerForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
@@ -179,6 +181,12 @@ namespace My2DEffectEditor {
 			frame = 1;
 		}
 	}
+
+	public: bool IsAnimating()
+	{
+		return timerEnable;
+	}
+
 	private: System::Void timer1_Tick_1(System::Object^  sender, System::EventArgs^  e) {
 		this->Text = frame.ToString("000") + L"/30 ƒtƒŒ[ƒ€";
 		this->ControlBox = false;
